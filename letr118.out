@@ -3,7 +3,7 @@ Allocating 1 tasks on 1 nodes with 8 GPUs per Node
 CommandNotFoundError: Your shell has not been properly configured to use 'conda activate'.
 To initialize your shell, run
 
-    $ conda init <SHELL_NAME>
+asdljflasdkflasdkjf    $ conda init <SHELL_NAME>
 
 Currently supported shells are:
   - bash
