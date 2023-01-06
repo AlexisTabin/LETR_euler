@@ -1,4 +1,4 @@
 data/
 exp/
 evaluation/
-
+*.out
