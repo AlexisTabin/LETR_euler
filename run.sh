@@ -6,9 +6,9 @@
 #SBATCH --gpus-per-node=8
 #SBATCH --time=0-08:00:00
 
-#SBATCH --job-name=letr888_20G
-#SBATCH --output=letr888_20G.out
-#SBATHC --error=letr888_20G.err
+#SBATCH --job-name=letr
+#SBATCH --output=letr.out
+#SBATHC --error=letr.err
 
 echo "Allocating 8 tasks on 8 nodes with 8 GPUs per Node"
 
