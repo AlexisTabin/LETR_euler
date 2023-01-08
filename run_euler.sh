@@ -1,23 +1,14 @@
-#!/bin/bash
+# The goal of this script is to run the code on the Euler cluster
+# Before running this script, you should have the virtual environment with all the dependencies installed
+# First, it will pull the latest version of the code from github
+# Then, it removes the old lsf files and activate the virtual environment
+# Finally, it will run the code on the cluster
 
-#SBATCH -n 1
-#SBATCH -N 1
-#SBATCH --mem-per-cpu=10G
-#SBATCH --gpus-per-node=8
-#SBATCH --time=0-08:00:00
+# IMPORTANT : all the configurations are done in the config.json file
 
-#SBATCH --job-name=letr118
-#SBATCH --output=letr118.out
-#SBATHC --error=letr118.err
+git pull
+TAG=$(git rev-parse --short HEAD)
 
-echo "Allocating 1 tasks on 1 nodes with 8 GPUs per Node"
-
-rm -rf exp/res50_stage1/
-
+source ~/.bashrc
 conda activate deepl
-
-bash script/train/a0_train_stage1_res50.sh  res50_stage1
-
-echo "Done rendering"
-
-exit 0
+sbatch < run.sh
