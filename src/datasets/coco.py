@@ -14,10 +14,6 @@ import numpy as np
 class CocoDetection(torchvision.datasets.CocoDetection):
     def __init__(self, img_folder, ann_file, transforms, args):
         super(CocoDetection, self).__init__(img_folder, ann_file)
-        print("="*100)
-        print("img_folder: ", img_folder)
-        print("ann_file: ", ann_file)
-        print("="*100)
         self._transforms = transforms
         self.prepare = ConvertCocoPolysToMask() 
         self.args = args
