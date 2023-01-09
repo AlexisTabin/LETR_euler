@@ -47,8 +47,6 @@ class HungarianMatcher_Line(nn.Module):
                 len(index_i) = len(index_j) = min(num_queries, num_target_lines)
         """
         bs, num_queries = outputs["pred_logits"].shape[:2]
-        print("pred_logits: ", outputs['pred_logits'].shape)
-        print("pred_lines: ", outputs['pred_lines'].shape)
         # We flatten to compute the cost matrices in a batch
         out_prob = outputs["pred_logits"].flatten(0, 1).softmax(-1)  # [batch_size * num_queries, num_classes]
 
@@ -62,11 +60,7 @@ class HungarianMatcher_Line(nn.Module):
         # Compute the classification cost. Contrary to the loss, we don't use the NLL,
         # but approximate it in 1 - proba[target class].
         # The 1 is a constant that doesn't change the matching, it can be ommitted.
-        print("="*100)
-        print('out_prob', out_prob.shape)
-        print('tgt_ids', tgt_ids)
-        print("="*100)
-       
+
         cost_class = -out_prob[:, tgt_ids]
 
         # Compute the L1 cost between lines
