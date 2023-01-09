@@ -18,7 +18,7 @@ from models import build_model
 from args import get_args_parser
 
 def main(args):
-#    print("ARGS : ", args)
+    print("ARGS : ", args)
     utils.init_distributed_mode(args)
     print("git:\n  {}\n".format(utils.get_sha()))
 
