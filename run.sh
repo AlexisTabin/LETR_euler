@@ -4,7 +4,7 @@
 #SBATCH -N 8
 #SBATCH --mem-per-cpu=40G
 #SBATCH --gpus-per-node=8
-#SBATCH --time=0-08:00:00
+#SBATCH --time=0-00:30:00
 
 #SBATCH --job-name=letr
 #SBATCH --output=letr.out
