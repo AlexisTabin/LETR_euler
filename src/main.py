@@ -64,6 +64,7 @@ def main(args):
 
         data_loader_val = DataLoader(dataset_val, args.batch_size, sampler=sampler_val, drop_last=False, collate_fn=utils.collate_fn, num_workers=args.num_workers)
     else:
+        
         dataset_train = build_dataset(image_set='train', args=args)
         dataset_val = build_dataset(image_set='val', args=args)
 
@@ -177,6 +178,7 @@ def main(args):
         if args.distributed:
             sampler_train.set_epoch(epoch)
         
+        print("DataloaderTrain : ", len(data_loader_train))
         train_stats = train_one_epoch(model, criterion, postprocessors, data_loader_train, optimizer, device, epoch, args.clip_max_norm, args)
         
         lr_scheduler.step()

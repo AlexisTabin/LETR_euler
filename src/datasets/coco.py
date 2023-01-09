@@ -14,6 +14,10 @@ import numpy as np
 class CocoDetection(torchvision.datasets.CocoDetection):
     def __init__(self, img_folder, ann_file, transforms, args):
         super(CocoDetection, self).__init__(img_folder, ann_file)
+        print("="*100)
+        print("img_folder: ", img_folder)
+        print("ann_file: ", ann_file)
+        print("="*100)
         self._transforms = transforms
         self.prepare = ConvertCocoPolysToMask() 
         self.args = args
@@ -114,6 +118,7 @@ def make_coco_transforms(image_set, args):
     raise ValueError(f'unknown {image_set}')
 
 def build(image_set, args):
+    print("building coco dataset")
     root = Path(args.coco_path)
     assert root.exists(), f'provided COCO path {root} does not exist'
     mode = 'lines'
@@ -130,5 +135,6 @@ def build(image_set, args):
         }
 
     img_folder, ann_file = PATHS[image_set]
+    print("Args : ", args)
     dataset = CocoDetection(img_folder, ann_file, transforms=make_coco_transforms(image_set, args), args=args)
     return dataset
