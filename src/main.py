@@ -171,6 +171,8 @@ def main(args):
 
     print("Start training")
     start_time = time.time()
+    print("Start training at epoch: ", args.start_epoch)
+    print("Total epochs: ", args.epochs)
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
             sampler_train.set_epoch(epoch)
