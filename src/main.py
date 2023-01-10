@@ -177,11 +177,6 @@ def main(args):
         print("ARGS : ", args)
         wandb.init(project="letr", entity="hogliners")
         # Config Weight and Biases
-        wandb.config = {
-            "learning_rate": args.lr,
-            "epochs": args.epochs,
-            "batch_size": args.batch_size
-        }
 
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
