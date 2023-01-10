@@ -6,7 +6,7 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 
-from util.misc import (NestedTensor, nested_tensor_from_tensor_list,
+from src.util.misc import (NestedTensor, nested_tensor_from_tensor_list,
                        accuracy, get_world_size, interpolate,
                        is_dist_avail_and_initialized)
 
@@ -318,9 +318,7 @@ def build(args):
     num_classes = 2
 
     device = torch.device(args.device)
-    print("Device : ", device)
-
-
+    
     backbone = build_backbone(args)
 
     transformer = build_transformer(args)
