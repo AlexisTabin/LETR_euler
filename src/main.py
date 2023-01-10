@@ -23,11 +23,8 @@ def main(args):
     #utils.init_distributed_mode(args)
     print("git:\n  {}\n".format(utils.get_sha()))
 
-    #wandb.init(project="letr", entity="hogliners")
 
     output_dir = Path(args.output_dir)
-
-    print(args)
 
     device = torch.device(args.device)
 
@@ -177,14 +174,10 @@ def main(args):
     print("Start training at epoch: ", args.start_epoch)
     print("Total epochs: ", args.epochs)
 
-    # Config Weight and Biases
-    '''
-    wandb.config = {
-        "learning_rate": args.lr,
-        "epochs": args.epochs,
-        "batch_size": args.batch_size
-    }
-    '''
+    if args.rank == 0:
+        print("ARGS : ", args)
+        wandb.init(project="letr", entity="hogliners")
+        # Config Weight and Biases
 
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
