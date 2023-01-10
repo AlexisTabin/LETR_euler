@@ -9,7 +9,8 @@
 
 #SBATCH --job-name=letr
 #SBATCH --output=letr.out
-#SBATHC --error=letr.err
+#SBATCH --error=letr.err
+#SBATCH --mail-user=$USER@ethz.ch
 
 echo "Allocating 8 tasks on 8 nodes with 8 GPUs per Node"
 
