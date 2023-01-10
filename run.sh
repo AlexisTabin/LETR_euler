@@ -1,15 +1,15 @@
 #!/bin/bash
 
-#SBATCH -n 8
-#SBATCH -N 8
+#SBATCH -n 1
+#SBATCH -N 1
 #SBATCH --mem-per-cpu=40G
 
-#SBATCH --gpus-per-node=8
-#SBATCH --time=0-03:59:59
+#SBATCH --gpus-per-node=1
+#SBATCH --time=0-00:10:00
 
 #SBATCH --job-name=letr
-#SBATCH --output=letr.out
-#SBATCH --error=letr.err
+#SBATCH --output=letr_off.out
+#SBATCH --error=letr_off.err
 #SBATCH --mail-user=$USER@ethz.ch
 
 echo "Allocating 8 tasks on 8 nodes with 8 GPUs per Node"
