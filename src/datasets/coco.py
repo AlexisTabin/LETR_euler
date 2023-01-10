@@ -118,7 +118,10 @@ def build(image_set, args):
     root = Path(args.coco_path)
     assert root.exists(), f'provided COCO path {root} does not exist'
     mode = 'lines'
-
+    print("*"*100)
+    print("This is root: ", root)
+    print("*"*100)
+    
 
     #TODO HANDLE THE DIFF BETWEEN VAL AND TRAIN
     PATHS = { "train" : (root, root / "annotations" / f'{mode}_train2017.json'), "val" : (root, root / "annotations" / f'{mode}_val2017.json')}
