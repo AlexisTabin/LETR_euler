@@ -118,9 +118,6 @@ def build(image_set, args):
     root = Path(args.coco_path)
     assert root.exists(), f'provided COCO path {root} does not exist'
     mode = 'lines'
-    print("*"*100)
-    print("This is root: ", root)
-    print("*"*100)
     
 
     #TODO HANDLE THE DIFF BETWEEN VAL AND TRAIN
@@ -139,5 +136,9 @@ def build(image_set, args):
     '''
     img_folder, ann_file = PATHS[image_set]
     #print("Args : ", args)
+    print("*"*100)
+    print("This is root: ", ann_file)
+    print("*"*100)
+    
     dataset = CocoDetection(img_folder, ann_file, transforms=make_coco_transforms(image_set, args), args=args)
     return dataset
