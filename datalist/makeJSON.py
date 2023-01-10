@@ -29,7 +29,7 @@ def save_and_process(lines):
                 new_lines_pairs.append( [x2,y1, x1-x2, y1-y2] )
     return new_lines_pairs
 
-cfg.merge_from_file("LETR_euler\datalist\config\params_hypersim.yaml")
+cfg.merge_from_file("datalist/config/params_hypersim.yaml")
 
 train_dataset = TrainDataset(
 cfg.DATASET.root_dataset,
