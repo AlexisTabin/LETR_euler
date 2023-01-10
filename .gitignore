@@ -4,3 +4,4 @@ data/
 exp/
 evaluation/
 *.out
+data_normals/
