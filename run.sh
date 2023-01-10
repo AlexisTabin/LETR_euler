@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -n 8
-#SBATCH -N 8
+#SBATCH -N 4
 #SBATCH --mem-per-cpu=40G
 
 #SBATCH --gpus-per-node=8
@@ -11,7 +11,7 @@
 #SBATCH --output=letr_wb.out
 #SBATCH --error=letr_wb.err
 
-echo "Allocating 8 tasks on 8 nodes with 8 GPUs per Node"
+echo "Allocating 8 tasks on 4 nodes with 8 GPUs per Node"
 
 rm -rf exp/res50_stage1_wb/
 
