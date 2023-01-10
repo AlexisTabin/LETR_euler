@@ -14,6 +14,7 @@ import numpy as np
 import torch
 import datetime
 import util.misc as utils
+import wandb
 
 def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, device, epoch, max_norm, args):
     model.train()
@@ -53,7 +54,11 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
         losses_reduced_scaled = sum(loss_dict_reduced_scaled.values())
 
         loss_value = losses_reduced_scaled.item()
+        wandb.log({"loss": loss_value})
 
+        # Optional
+        wandb.watch(model)
+        
         if not math.isfinite(loss_value):
             print("Loss is {}, stopping training".format(loss_value))
             print(loss_dict_reduced)
