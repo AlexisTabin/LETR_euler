@@ -1,0 +1,7 @@
+DATASET:
+  root_dataset: "LETR_euler/data/dl_data"
+  list_train: "LETR_euler/datalist/training_hypersim_lines.odgt"
+  list_val: "LETR_euler/datalist/validation_hypersim_lines.odgt"
+  list_test: "LETR_euler/datalist/testing_hypersim_lines.odgt"
+
+

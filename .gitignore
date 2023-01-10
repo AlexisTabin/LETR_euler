@@ -8,3 +8,4 @@ wandb/
 data_normals/test
 data_normals/train
 data_normals/val
+*.csv
