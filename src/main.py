@@ -23,7 +23,7 @@ def main(args):
     utils.init_distributed_mode(args)
     print("git:\n  {}\n".format(utils.get_sha()))
 
-    #wandb.init(project="letr", entity="hogliners")
+    wandb.init(project="letr", entity="hogliners")
 
     output_dir = Path(args.output_dir)
 
@@ -178,13 +178,11 @@ def main(args):
     print("Total epochs: ", args.epochs)
 
     # Config Weight and Biases
-    '''
     wandb.config = {
         "learning_rate": args.lr,
         "epochs": args.epochs,
         "batch_size": args.batch_size
     }
-    '''
 
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
