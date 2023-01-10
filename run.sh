@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#SBATCH -n 8
-#SBATCH -N 4
+#SBATCH -n 1
+#SBATCH -N 1
 #SBATCH --mem-per-cpu=40G
 
 #SBATCH --gpus-per-node=1
