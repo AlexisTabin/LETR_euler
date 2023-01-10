@@ -1,7 +1,8 @@
-__pycache__/
+#__pycache__/
 ./*.out
 data/
 exp/
 evaluation/
 *.out
 data_normals/
+wandb/
