@@ -54,7 +54,8 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
         losses_reduced_scaled = sum(loss_dict_reduced_scaled.values())
 
         loss_value = losses_reduced_scaled.item()
-        wandb.log({"loss": losses})
+        if args.rank == 0:
+            wandb.log({"loss": losses})
 
         # Optional
         wandb.watch(model)
