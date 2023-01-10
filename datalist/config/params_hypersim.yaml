@@ -1,5 +1,5 @@
 DATASET:
-  root_dataset: "/data_normals/"
+  root_dataset: "data_normals/"
   list_train: "datalist/training_hypersim_lines.odgt"
   list_val: "datalist/validation_hypersim_lines.odgt"
   list_test: "datalist/testing_hypersim_lines.odgt"

@@ -77,7 +77,7 @@ anno['images'] = []
 anno["annotations"] = []
 anno["categories"] = [{"supercategory":"structural", "id": "0", "name": "structural"}, {"supercategory":"textural", "id": "2", "name": "textural"}]
 
-for i in range(4):
+for i in range(len(dataset)):
     entry = dataset[i]
     anno_id = handle(entry, entry['image'], image_id, anno_id)
     image_id += 1
@@ -124,7 +124,7 @@ anno['images'] = []
 anno["annotations"] = []
 anno["categories"] = [{"supercategory":"structural", "id": "0", "name": "structural"}, {"supercategory":"textural", "id": "2", "name": "textural"}]
 
-for i in range(4):
+for i in range(len(dataset)):
     entry = dataset[i]
     anno_id = handle(entry, entry['image'], image_id, anno_id)
     image_id += 1
