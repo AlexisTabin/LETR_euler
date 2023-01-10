@@ -88,7 +88,7 @@ with open(anno_path, 'w') as outfile:
     json.dump(anno, outfile)
 '''
 # Writing to sample.json
-with open("LETR_euler/data_normals/annotations/lines_train2017_test.json", "w") as outfile:
+with open("data_normals/annotations/lines_train2017_test.json", "w") as outfile:
     # Serializing json
     json_object = json.dump(anno, outfile)
 
@@ -135,7 +135,7 @@ with open(anno_path, 'w') as outfile:
     json.dump(anno, outfile)
 '''
 # Writing to sample.json
-with open("LETR_euler/data_normals/annotations/lines_val2017_test.json", "w") as outfile:
+with open("data_normals/annotations/lines_val2017_test.json", "w") as outfile:
     # Serializing json
     json_object = json.dump(anno, outfile)
 
