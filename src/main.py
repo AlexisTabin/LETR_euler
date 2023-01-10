@@ -19,14 +19,11 @@ from args import get_args_parser
 import wandb
 
 def main(args):
-    print("ARGS : ", args)
     utils.init_distributed_mode(args)
     print("git:\n  {}\n".format(utils.get_sha()))
 
 
     output_dir = Path(args.output_dir)
-
-    print(args)
 
     device = torch.device(args.device)
 
@@ -177,6 +174,7 @@ def main(args):
     print("Total epochs: ", args.epochs)
 
     if args.rank == 0:
+        print("ARGS : ", args)
         wandb.init(project="letr", entity="hogliners")
         # Config Weight and Biases
         wandb.config = {

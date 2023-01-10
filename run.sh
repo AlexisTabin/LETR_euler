@@ -14,7 +14,7 @@
 echo "Allocating 8 tasks on 8 nodes with 8 GPUs per Node"
 
 rm -rf exp/res50_stage1/
-
+wandb login 
 bash script/train/a0_train_stage1_res50.sh  res50_stage1
 echo "Done rendering"
 
