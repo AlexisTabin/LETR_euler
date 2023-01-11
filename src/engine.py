@@ -80,9 +80,10 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
 
     # Save the metrics to wandb
     print("Saving metrics to wandb")
-    for name, meter in metric_logger.meters.items():
-        if name in WANDB_STATS:
-            wandb.log({f"{name}": meter.value})
+    if utils.is_main_process():
+        for name, meter in metric_logger.meters.items():
+            if name in WANDB_STATS:
+                wandb.log({f"{name}": meter.value})
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 
