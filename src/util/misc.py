@@ -222,7 +222,9 @@ class MetricLogger(object):
 
             # iterate on self.meters
             for key, value in self.meters.items():
-                wandb.log({"{key}": value})
+                print("Key : ", key)
+                print("Value : ", value)
+                wandb.log({f"{key}": value})
 
         MB = 1024.0 * 1024.0
         for obj in iterable:
