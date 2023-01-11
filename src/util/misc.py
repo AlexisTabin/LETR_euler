@@ -11,7 +11,7 @@ from collections import defaultdict, deque
 import datetime
 import pickle
 from typing import Optional, List
-
+import wandb
 import torch
 import torch.distributed as dist
 from torch import Tensor
@@ -187,7 +187,7 @@ class MetricLogger(object):
     def add_meter(self, name, meter):
         self.meters[name] = meter
 
-    def log_every(self, iterable, print_freq, header=None):
+    def log_every(self, iterable, print_freq, header=None, args=None):
         i = 0
         if not header:
             header = ''
@@ -215,6 +215,15 @@ class MetricLogger(object):
                 'time: {time}',
                 'data: {data}'
             ])
+        
+        if args and (args.rank == 0):
+            print("Meters : ", self.meters)
+            print("Type(meters) : ", type(self.meters))
+
+            # iterate on self.meters
+            for key, value in self.meters.items():
+                wandb.log({"{key}": value})
+
         MB = 1024.0 * 1024.0
         for obj in iterable:
             data_time.update(time.time() - end)

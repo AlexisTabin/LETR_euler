@@ -27,7 +27,7 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
 
     counter = 0
     torch.cuda.empty_cache()
-    for samples, targets in metric_logger.log_every(data_loader, print_freq, header):
+    for samples, targets in metric_logger.log_every(data_loader, print_freq, header, args):
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
         
@@ -55,10 +55,8 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
 
         loss_value = losses_reduced_scaled.item()
         
+        # Optional
         if args.rank == 0:
-            wandb.log({"loss": losses})
-
-            # Optional
             wandb.watch(model)
         
         if not math.isfinite(loss_value):
