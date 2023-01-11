@@ -11,7 +11,6 @@ from collections import defaultdict, deque
 import datetime
 import pickle
 from typing import Optional, List
-import wandb
 import torch
 import torch.distributed as dist
 from torch import Tensor
@@ -187,7 +186,7 @@ class MetricLogger(object):
     def add_meter(self, name, meter):
         self.meters[name] = meter
 
-    def log_every(self, iterable, print_freq, header=None, args=None):
+    def log_every(self, iterable, print_freq, header=None):
         i = 0
         if not header:
             header = ''
@@ -242,15 +241,6 @@ class MetricLogger(object):
 
         print('{} Total time: {} ({:.4f} s / it)'.format(
             header, total_time_str, total_time / (len(iterable) if len(iterable) != 0 else 1)))
-
-
-        # iterate on self.meters
-        for name, meter in self.meters.items():
-            print("Name : ", name)
-            print("Meter : ", meter)
-            print("Type(meter) : ", type(meter))
-            print("{}: {}".format(name, str(meter)))
-            wandb.log({f"{name}": meter.value})
 
 def get_sha():
     cwd = os.path.dirname(os.path.abspath(__file__))
