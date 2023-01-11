@@ -56,8 +56,7 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
         loss_value = losses_reduced_scaled.item()
         
         # Optional
-        if args.rank == 0:
-            wandb.watch(model)
+        wandb.watch(model)
         
         if not math.isfinite(loss_value):
             print("Loss is {}, stopping training".format(loss_value))

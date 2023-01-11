@@ -175,10 +175,9 @@ def main(args):
     print("Start training at epoch: ", args.start_epoch)
     print("Total epochs: ", args.epochs)
 
-    if args.rank == 0:
-        print("ARGS : ", args)
-        wandb.init(project="letr", entity="hogliners")
-        # Config Weight and Biases
+    print("ARGS : ", args)
+    wandb.init(project="letr", entity="hogliners")
+    # Config Weight and Biases
 
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
