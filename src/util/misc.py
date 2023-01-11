@@ -11,7 +11,6 @@ from collections import defaultdict, deque
 import datetime
 import pickle
 from typing import Optional, List
-
 import torch
 import torch.distributed as dist
 from torch import Tensor
@@ -214,7 +213,8 @@ class MetricLogger(object):
                 '{meters}',
                 'time: {time}',
                 'data: {data}'
-            ])
+            ]) 
+
         MB = 1024.0 * 1024.0
         for obj in iterable:
             data_time.update(time.time() - end)
@@ -238,9 +238,9 @@ class MetricLogger(object):
             end = time.time()
         total_time = time.time() - start_time
         total_time_str = str(datetime.timedelta(seconds=int(total_time)))
-        print('{} Total time: {} ({:.4f} s / it)'.format(
-            header, total_time_str, total_time / len(iterable)))
 
+        print('{} Total time: {} ({:.4f} s / it)'.format(
+            header, total_time_str, total_time / (len(iterable) if len(iterable) != 0 else 1)))
 
 def get_sha():
     cwd = os.path.dirname(os.path.abspath(__file__))

@@ -14,6 +14,9 @@ import numpy as np
 import torch
 import datetime
 import util.misc as utils
+import wandb
+
+WANDB_STATS = ['loss', 'loss_ce', 'loss_line', 'loss_ce_unscaled', 'loss_line_unscaled']
 
 def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, device, epoch, max_norm, args):
     model.train()
@@ -21,7 +24,7 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
     metric_logger = utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter('lr', utils.SmoothedValue(window_size=1, fmt='{value:.6f}'))
     header = 'Epoch: [{}]'.format(epoch)
-    print_freq = 10
+    print_freq = 50
 
 
     counter = 0
@@ -53,7 +56,11 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
         losses_reduced_scaled = sum(loss_dict_reduced_scaled.values())
 
         loss_value = losses_reduced_scaled.item()
-
+        
+        # Optional
+        if utils.is_main_process():
+            wandb.watch(model)
+        
         if not math.isfinite(loss_value):
             print("Loss is {}, stopping training".format(loss_value))
             print(loss_dict_reduced)
@@ -70,6 +77,12 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
     print("Averaged stats:", metric_logger)
+
+    # Save the metrics to wandb
+    print("Saving metrics to wandb")
+    for name, meter in metric_logger.meters.items():
+        if name in WANDB_STATS:
+            wandb.log({f"{name}": meter.value})
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 

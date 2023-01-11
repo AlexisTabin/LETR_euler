@@ -1,23 +1,26 @@
 #!/bin/bash
 
-#SBATCH -n 8
-#SBATCH -N 8
+#SBATCH --ntasks=8
+#SBATCH --nodes=4
 #SBATCH --mem-per-cpu=40G
-#SBATCH --gpus-per-node=1
-#SBATCH --time=0-00:30:00
 
-#SBATCH --job-name=letr
-#SBATCH --output=letr.out
-#SBATHC --error=letr.err
+#SBATCH --gpus-per-node=8
+#SBATCH --time=0-3:59:59
 
-echo "Allocating 8 tasks on 8 nodes with 8 GPUs per Node"
+#SBATCH --job-name=letr_848
+#SBATCH --output=letr_848.out
+#SBATCH --error=letr_848.err
 
-rm -rf exp/res50_stage1/
+#SBATCH --mail-type=BEGIN    # notify on state change: BEGIN, END, FAIL or ALL
+#SBATCH --mail-user=$USER   # who to send email notification for job stats changes
 
-conda activate deepl
+echo "Allocating 8 tasks on 4 nodes with 8 GPUs per Node"
 
-bash script/train/a0_train_stage1_res50.sh  res50_stage1
+rm -rf exp/res50_stage1_848/
 
+wandb login
+
+bash script/train/a0_train_stage1_res50.sh  res50_stage1_848
 echo "Done rendering"
 
 exit 0
