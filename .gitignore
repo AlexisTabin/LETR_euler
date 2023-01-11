@@ -5,7 +5,5 @@ exp/
 evaluation/
 *.out
 wandb/
-data_normals/test
-data_normals/train
-data_normals/val
+data_normals/
 *.csv
