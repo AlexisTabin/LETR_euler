@@ -77,6 +77,7 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
     print("Averaged stats:", metric_logger)
+<<<<<<< HEAD
 
     # Save the metrics to wandb
     print("Saving metrics to wandb")
@@ -84,6 +85,15 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
         for name, meter in metric_logger.meters.items():
             if name in WANDB_STATS:
                 wandb.log({f"{name}": meter.value})
+=======
+    # iterate on self.meters
+    for name, meter in metric_logger.meters.items():
+        print("Name : ", name)
+        print("Meter : ", meter)
+        print("Type(meter) : ", type(meter))
+        print("{}: {}".format(name, str(meter)))
+        wandb.log({f"{name}": meter.value})
+>>>>>>> dbb1a1a (update average stats)
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 
