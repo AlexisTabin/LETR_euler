@@ -223,5 +223,4 @@ if __name__ == '__main__':
         Path(args.output_dir).mkdir(parents=True, exist_ok=True)
         Path(args.output_dir+'/checkpoints').mkdir(parents=True, exist_ok=True)
     
- #   print("yo args : ", args)
     main(args)
