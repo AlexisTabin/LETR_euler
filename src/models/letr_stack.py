@@ -38,7 +38,7 @@ class LETRstack(nn.Module):
                                             num_decoder_layers=args.second_dec_layers, normalize_before=args.second_pre_norm, return_intermediate_dec=True,)
 
         # output layer
-        self.class_embed = nn.Linear(hidden_dim, 1 + 1)
+        self.class_embed = nn.Linear(hidden_dim, 3)
         self.lines_embed = MLP(hidden_dim, hidden_dim, 4, 3)
 
 
