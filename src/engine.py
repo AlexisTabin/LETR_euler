@@ -27,7 +27,7 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
 
     counter = 0
     torch.cuda.empty_cache()
-    for samples, targets in metric_logger.log_every(data_loader, print_freq, header, args):
+    for samples, targets in metric_logger.log_every(data_loader, print_freq, header):
         samples = samples.to(device)
         targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
         
@@ -56,7 +56,7 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
         loss_value = losses_reduced_scaled.item()
         
         # Optional
-        if args.rank == 0:
+        if utils.is_main_process():
             wandb.watch(model)
         
         if not math.isfinite(loss_value):
@@ -75,6 +75,15 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
     print("Averaged stats:", metric_logger)
+
+    # Save the metrics to wandb
+    print("Saving metrics to wandb")
+    for name, meter in metric_logger.meters.items():
+        # print("Name : ", name)
+        # print("Meter : ", meter)
+        # print("Type(meter) : ", type(meter))
+        # print("{}: {}".format(name, str(meter)))
+        wandb.log({f"{name}": meter.value})
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 

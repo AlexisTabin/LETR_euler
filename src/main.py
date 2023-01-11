@@ -175,7 +175,7 @@ def main(args):
     print("Start training at epoch: ", args.start_epoch)
     print("Total epochs: ", args.epochs)
 
-    if args.rank == 0:
+    if utils.is_main_process():
         print("ARGS : ", args)
         wandb.init(project="letr", entity="hogliners")
         # Config Weight and Biases
