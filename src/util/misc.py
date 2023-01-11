@@ -244,15 +244,15 @@ class MetricLogger(object):
             header, total_time_str, total_time / (len(iterable) if len(iterable) != 0 else 1)))
 
         if args and (args.rank == 0):
-            print("Meters : ", self.meters)
-            print("Type(meters) : ", type(self.meters))
-
+            print("\n"*2)
+            print("*"*50)
+            print("Logging to wandb")
+            print("*"*50)
+            print("\n"*2)
+            wandb.log({"epoch": args.epoch, "total_time": total_time})
             # iterate on self.meters
             for name, meter in self.meters.items():
-                print("{}: {}".format(name, str(meter)))
-                print("name : ", name)
-                print("meter : ", str(meter))
-                wandb.log({f"{name}": float(str(meter))})
+                wandb.log({f"{name}": meter.value})
 
 def get_sha():
     cwd = os.path.dirname(os.path.abspath(__file__))
