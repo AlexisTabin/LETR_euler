@@ -16,6 +16,8 @@ import datetime
 import util.misc as utils
 import wandb
 
+WANDB_STATS = ['loss', 'loss_ce', 'loss_line', 'loss_ce_unscaled', 'loss_line_unscaled']
+
 def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, device, epoch, max_norm, args):
     model.train()
     criterion.train()
@@ -79,11 +81,8 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
     # Save the metrics to wandb
     print("Saving metrics to wandb")
     for name, meter in metric_logger.meters.items():
-        # print("Name : ", name)
-        # print("Meter : ", meter)
-        # print("Type(meter) : ", type(meter))
-        # print("{}: {}".format(name, str(meter)))
-        wandb.log({f"{name}": meter.value})
+        if name in WANDB_STATS:
+            wandb.log({f"{name}": meter.value})
     return {k: meter.global_avg for k, meter in metric_logger.meters.items()}
 
 
