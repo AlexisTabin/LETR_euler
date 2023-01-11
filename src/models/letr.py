@@ -315,7 +315,7 @@ class MLP(nn.Module):
 
 
 def build(args):
-    num_classes = 2
+    num_classes = 3
 
     device = torch.device(args.device)
     
