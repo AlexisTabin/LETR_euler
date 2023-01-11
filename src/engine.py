@@ -22,7 +22,7 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
     metric_logger = utils.MetricLogger(delimiter="  ")
     metric_logger.add_meter('lr', utils.SmoothedValue(window_size=1, fmt='{value:.6f}'))
     header = 'Epoch: [{}]'.format(epoch)
-    print_freq = 10
+    print_freq = 50
 
 
     counter = 0

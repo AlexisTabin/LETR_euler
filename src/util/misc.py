@@ -247,12 +247,13 @@ class MetricLogger(object):
             print("\n"*2)
             print("*"*50)
             print("Logging to wandb")
-            print("*"*50)
-            print("\n"*2)
-            wandb.log({"epoch": args.epoch, "total_time": total_time})
             # iterate on self.meters
             for name, meter in self.meters.items():
                 wandb.log({f"{name}": meter.value})
+                print(f"{name}: {meter.value}")
+            print("*"*50)
+            print("\n"*2)
+
 
 def get_sha():
     cwd = os.path.dirname(os.path.abspath(__file__))
