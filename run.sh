@@ -7,7 +7,7 @@
 #SBATCH --gpus-per-node=3
 #SBATCH --time=0-3:59:59
 
-#SBATCH --job-name=3h_r101_213_s1
+#SBATCH --job-name=4h_r101_213_s1
 #SBATCH --output=4h_r101_213_s1.out
 #SBATCH --error=4h_r101_213_s1.err
 
