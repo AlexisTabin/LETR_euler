@@ -21,7 +21,7 @@ if [ ! -d "$output"  ]; then
         --master_port=$((1000 + RANDOM % 9999)) --nproc_per_node=8 --use_env  src/main.py --coco_path data/wireframe_processed \
         --output_dir $output  --LETRpost  --backbone resnet50  --layer1_frozen  --resume exp/res50_stage2/checkpoints/checkpoint.pth  \
         --no_opt --batch_size 1  --epochs 25  --lr_drop 25  --num_queries 1000  --num_gpus 8  --lr 1e-5  --label_loss_func focal_loss \
-        --label_loss_params '{"gamma":2.0}'  --save_freq 1  |  tee -a $output/history.txt \
+        --label_loss_params '{"gamma":2.0}'  --save_freq 1   --wandb_name $name |  tee -a $output/history.txt \
         --wandb_name $name
 
 else
