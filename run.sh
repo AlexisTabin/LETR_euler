@@ -14,11 +14,11 @@
 #SBATCH --mail-type=ALL    # notify on state change: BEGIN, END, FAIL or ALL
 #SBATCH --mail-user=atabin@student.ethz.ch  # who to send email notification for job stats changes
 
-echo "Allocating 2 tasks on 1 nodes with 4 GPUs per Node for 4h"
-echo "Running A3"
+echo "Allocating 2 tasks on 1 nodes with 4 GPUs per Node for 12h from resume"
+echo "Running A4"
 
-rm -rf exp/res50_stage3_214_4h/
-bash script/train/a4_train_stage2_focal_res50.sh  res50_stage3_214_4h
+rm -rf exp/res50_stage3_214_12h_resumed/
+bash script/train/a4_train_stage2_focal_res50.sh  res50_stage3_214_12h_resumed
 echo "Done rendering"
 
 exit 0
