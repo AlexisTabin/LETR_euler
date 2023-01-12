@@ -18,8 +18,6 @@ echo "Allocating 8 tasks on 1 nodes with 8 GPUs per Node"
 echo "Running A2"
 
 rm -rf exp/res50_stage2_818/
-rm *.out
-rm *.err
 bash script/train/a2_train_stage2_res50.sh  res50_stage2_818
 echo "Done rendering"
 
