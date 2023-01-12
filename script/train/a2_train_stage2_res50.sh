@@ -19,6 +19,7 @@ if [ ! -d "$output"  ]; then
 
     PYTHONPATH=$PYTHONPATH:./src python -m torch.distributed.launch \
     --master_port=$((1000 + RANDOM % 9999)) --nproc_per_node=3 --use_env  src/main.py --coco_path data_normals/ \
+    --resume exp/res50_stage2/checkpoints/checkpoint.pth \
     --output_dir $output --LETRpost --backbone resnet50 --layer1_frozen --frozen_weights exp/res50_stage1_848/checkpoints/checkpoint.pth --no_opt \
     --batch_size 1 ${@:2} --epochs 300 --lr_drop 120 --num_queries 1000 --num_gpus 3 --wandb_name $name | tee -a $output/history.txt  
 
