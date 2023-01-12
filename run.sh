@@ -5,7 +5,7 @@
 #SBATCH --mem-per-cpu=40G
 
 #SBATCH --gpus-per-node=4
-#SBATCH --time=0-3:59:59
+#SBATCH --time=0-11:59:59
 
 #SBATCH --job-name=4h_r50_214_s3
 #SBATCH --output=4h_r50_214_s3.out
