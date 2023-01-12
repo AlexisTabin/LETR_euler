@@ -18,7 +18,7 @@ echo "Allocating 2 tasks on 1 nodes with 4 GPUs per Node for 4h"
 echo "Running A3"
 
 rm -rf exp/res50_stage3_214_4h/
-bash script/train/a4_train_stage3_res50.sh  res50_stage3_214_4h
+bash script/train/a4_train_stage2_focal_res50.sh  res50_stage3_214_4h
 echo "Done rendering"
 
 exit 0
