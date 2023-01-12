@@ -110,7 +110,8 @@ def main():
     ax1.imshow(raw_img)
     ax1.axis('off')
 
-    outputs = model(inputs)
+    outputs = model(inputs)[0]
+    print(outputs)
 
     out_logits, out_line = outputs['pred_logits'], outputs['pred_lines']
     prob = F.softmax(out_logits, -1)
