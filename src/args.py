@@ -115,6 +115,6 @@ def get_args_parser():
     parser.add_argument('--eval', action='store_true')
     parser.add_argument('--dataset', default='train', type=str, choices=('train', 'val'))
 
-    parser.add_argument('--wandb_name', default='LETR', type=str, help='wandb run name')
+    parser.add_argument('--wandb_name', default='no_wandb', type=str, help='wandb run name')
 
     return parser

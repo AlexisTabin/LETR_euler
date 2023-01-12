@@ -80,7 +80,7 @@ def train_one_epoch(model, criterion, postprocessors, data_loader, optimizer, de
 
     # Save the metrics to wandb
     print("Saving metrics to wandb")
-    if utils.is_main_process():
+    if utils.is_main_process() and  args.wandb_name != "no_wandb":
         for name, meter in metric_logger.meters.items():
             if name in WANDB_STATS:
                 wandb.log({f"{name}": meter.value})
