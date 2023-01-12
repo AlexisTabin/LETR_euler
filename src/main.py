@@ -150,7 +150,6 @@ def main(args):
                 new_state_dict[k] = checkpoint['model'][k]
 
         model_without_ddp.letr.load_state_dict(new_state_dict)
-
         # params
         encoder = {k:v for k,v in new_state_dict.items() if "encoder" in k}
         decoder = {k:v for k,v in new_state_dict.items() if "decoder" in k}
