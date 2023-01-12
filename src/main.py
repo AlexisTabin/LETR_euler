@@ -177,7 +177,8 @@ def main(args):
 
     if utils.is_main_process():
         print("ARGS : ", args)
-        wandb.init(project="letr", entity="hogliners")
+        wandb_name =  args.wandb_name if args.wandb_name else "Wandb name not set"
+        wandb.init(project="letr", entity="hogliners", name=wandb_name)
         # Config Weight and Biases
 
     for epoch in range(args.start_epoch, args.epochs):
