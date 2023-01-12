@@ -8,8 +8,6 @@
 
 git pull
 TAG=$(git rev-parse --short HEAD)
-rm *.out
-rm *.err
 source ~/.bashrc
 conda activate deepl
 sbatch < run.sh
