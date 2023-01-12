@@ -174,9 +174,11 @@ def main(args):
     print("Start training at epoch: ", args.start_epoch)
     print("Total epochs: ", args.epochs)
 
-    print("ARGS : ", args)
-    wandb.init(project="letr", entity="hogliners")
-    # Config Weight and Biases
+    if utils.is_main_process():
+        print("ARGS : ", args)
+        wandb_name =  args.wandb_name if args.wandb_name else "Wandb name not set"
+        wandb.init(project="letr", entity="hogliners", name=wandb_name)
+        # Config Weight and Biases
 
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:
@@ -221,5 +223,4 @@ if __name__ == '__main__':
         Path(args.output_dir).mkdir(parents=True, exist_ok=True)
         Path(args.output_dir+'/checkpoints').mkdir(parents=True, exist_ok=True)
     
- #   print("yo args : ", args)
     main(args)
