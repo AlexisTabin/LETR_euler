@@ -22,8 +22,6 @@ if [ ! -d "$output"  ]; then
     --output_dir $output --LETRpost --backbone resnet50 --layer1_frozen --frozen_weights exp/res50_stage1_848/checkpoints/checkpoint.pth --no_opt \
     --batch_size 1 ${@:2} --epochs 300 --lr_drop 120 --num_queries 1000 --num_gpus 3 --wandb_name $name | tee -a $output/history.txt  
 
-
-
 else
     echo "folder already exist"
 fi
