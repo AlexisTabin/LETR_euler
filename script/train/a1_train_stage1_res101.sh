@@ -18,9 +18,9 @@ if [ ! -d "$output"  ]; then
     cp $0 $output/run.bash
 
     PYTHONPATH=$PYTHONPATH:./src python -m torch.distributed.launch \
-    --master_port=$((1000 + RANDOM % 9999)) --nproc_per_node=4 --use_env  src/main.py --coco_path data/dataset_marco \
+    --master_port=$((1000 + RANDOM % 9999)) --nproc_per_node=2 --use_env  src/main.py --coco_path data/dataset_marco \
     --output_dir $output --backbone resnet101 --wandb_name $name \
-    --batch_size 1 --epochs 500 --lr_drop 200 --num_queries 1000  --num_gpus 4   --layer1_num 3 | tee -a $output/history.txt \
+    --batch_size 1 --epochs 500 --lr_drop 200 --num_queries 1000  --num_gpus 2   --layer1_num 3 | tee -a $output/history.txt \
 
 else
     echo "folder already exist"
