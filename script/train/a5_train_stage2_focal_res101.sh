@@ -21,9 +21,7 @@ if [ ! -d "$output"  ]; then
         --master_port=$((1000 + RANDOM % 9999)) --nproc_per_node=4 --use_env  src/main.py --coco_path data/wireframe_processed \
         --output_dir $output  --LETRpost  --backbone resnet101  --layer1_frozen  --resume exp/res101_stage2/checkpoints/checkpoint.pth  --no_opt \
         --batch_size 1  --epochs 25  --lr_drop 25  --num_queries 1000  --num_gpus 4  --lr 1e-5  --label_loss_func focal_loss \
-        --label_loss_params '{"gamma":2.0}'  --save_freq 1  --wandb_name $name  |  tee -a $output/history.txt \
-        --wandb_name $name
-
+        --label_loss_params '{"gamma":2.0}'  --save_freq 1  --wandb_name $name  |  tee -a $output/history.txt 
 else
     echo "folder already exist"
 fi
