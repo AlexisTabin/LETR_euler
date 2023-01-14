@@ -1,12 +1,15 @@
+from util.misc import nested_tensor_from_tensor_list
+from models import build_model
+import torch.nn.functional as F
+import torchvision.transforms.functional as functional
 import numpy as np
+import os
 import torch
 import cv2
 import matplotlib.pyplot as plt
 plt.rcParams['figure.dpi'] = 200
-import torchvision.transforms.functional as functional
-import torch.nn.functional as F
-from models import build_model
-from util.misc import nested_tensor_from_tensor_list
+
+MODELS_DIR = '../exp/checkpoints/'
 
 class Compose(object):
     def __init__(self, transforms):
@@ -25,6 +28,7 @@ class Compose(object):
         format_string += "\n)"
         return format_string
 
+
 class Normalize(object):
     def __init__(self, mean, std):
         self.mean = mean
@@ -34,9 +38,11 @@ class Normalize(object):
         image = functional.normalize(image, mean=self.mean, std=self.std)
         return image
 
+
 class ToTensor(object):
     def __call__(self, img):
         return functional.to_tensor(img)
+
 
 def resize(image, size, max_size=None):
     # size can be min_size (scalar) or (w, h) tuple
@@ -46,7 +52,8 @@ def resize(image, size, max_size=None):
             min_original_size = float(min((w, h)))
             max_original_size = float(max((w, h)))
             if max_original_size / min_original_size * size > max_size:
-                size = int(round(max_size * min_original_size / max_original_size))
+                size = int(
+                    round(max_size * min_original_size / max_original_size))
         if (w <= h and w == size) or (h <= w and h == size):
             return (h, w)
         if w < h:
@@ -68,6 +75,7 @@ def resize(image, size, max_size=None):
 
     return rescaled_image
 
+
 class Resize(object):
     def __init__(self, sizes, max_size=None):
         assert isinstance(sizes, (list, tuple))
@@ -79,9 +87,12 @@ class Resize(object):
         return resize(img, size, self.max_size)
 
 
-def main():
+def infer_on_image(model, raw_img, ax):
+    model_path = MODELS_DIR + model
+    
     # obtain checkpoints
-    checkpoint = torch.load('../exp/res50_stage3_214_4h/checkpoints/checkpoint.pth', map_location='cpu')
+    print('Loading model from {}'.format(model_path))
+    checkpoint = torch.load(model_path, map_location='cpu')
 
     # load model
     args = checkpoint['args']
@@ -90,38 +101,32 @@ def main():
     model.load_state_dict(checkpoint['model'])
     model.eval()
 
-    # load image
-    raw_img = plt.imread('../figures/demo.png')
     h, w = raw_img.shape[0], raw_img.shape[1]
     orig_size = torch.as_tensor([int(h), int(w)])
 
     # normalize image
     test_size = 1100
     normalize = Compose([
-            ToTensor(),
-            Normalize([0.538, 0.494, 0.453], [0.257, 0.263, 0.273]),
-            Resize([test_size]),
-        ])
+        ToTensor(),
+        Normalize([0.538, 0.494, 0.453], [0.257, 0.263, 0.273]),
+        Resize([test_size]),
+    ])
     img = normalize(raw_img)
     inputs = nested_tensor_from_tensor_list([img])
 
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-    fig.suptitle('Demo')
-    ax1.imshow(raw_img)
-    ax1.axis('off')
 
     outputs = model(inputs)[0]
-    print(outputs)
 
     out_logits, out_line = outputs['pred_logits'], outputs['pred_lines']
     prob = F.softmax(out_logits, -1)
     #scores, labels = prob[..., :-1].max(-1)
     scores, labels = prob[..., :].max(-1)
     img_h, img_w = orig_size.unbind(0)
-    scale_fct = torch.unsqueeze(torch.stack([img_w, img_h, img_w, img_h], dim=0), dim=0)
+    scale_fct = torch.unsqueeze(torch.stack(
+        [img_w, img_h, img_w, img_h], dim=0), dim=0)
     lines = out_line * scale_fct[:, None, :]
     lines = lines.view(1000, 2, 2)
-    lines = lines.flip([-1])# this is yxyx format
+    lines = lines.flip([-1])  # this is yxyx format
     scores = scores.detach().numpy()
     keep = scores >= 0.7
     keep_labels_struct = labels == 0
@@ -135,17 +140,41 @@ def main():
     lines_text = lines_text.reshape(lines_text.shape[0], -1)
     lines_struct = lines_struct.reshape(lines_struct.shape[0], -1)
 
-    ax2.imshow(raw_img)
+    print('Number of text lines: {}'.format(lines_text.shape[0]))
+    print('Number of structural lines: {}'.format(lines_struct.shape[0]))
+    print('Plotting results')
+    ax.imshow(raw_img)
+    title = ' '.join(model.split('_'))
+    ax.set_title(title)
+    ax.axis('off')
     for tp_id, line in enumerate(lines_text):
-        y1, x1, y2, x2 = line # this is yxyx
+        y1, x1, y2, x2 = line  # this is yxyx
         p1 = (x1.detach().numpy(), y1.detach().numpy())
         p2 = (x2.detach().numpy(), y2.detach().numpy())
         temp_color = 'darkorange' if keep_labels_text[tp_id] else 'blue'
-        plt.plot([p1[0], p2[0]], [p1[1], p2[1]], linewidth=1.5, color=temp_color, zorder=1)
-    ax2.axis('off')
+        plt.plot([p1[0], p2[0]], [p1[1], p2[1]],
+                 linewidth=1.5, color=temp_color, zorder=1)
+
+
+def main():
+    # (deepl) scp atabin@euler.ethz.ch:/cluster/scratch/atabin/LETR_euler/exp/res50_stage1_415_24h/checkpoints/checkpoint.pth ./exp/checkpoints/checkpoint_res50_s1.pth
+    models = os.listdir(MODELS_DIR)
+    # load image
+    raw_img = plt.imread('../figures/demo.png')
+
+    fig, axes = plt.subplots(1, len(models) + 1, figsize=(20, 10))
+    fig.suptitle('Demo')
+
+    axes[0].imshow(raw_img)
+    axes[0].axis('off')
+    axes[0].set_title('Input Image')
+
+    print('Running inference on image')
+    for model, ax1 in zip(models, axes[1:]):
+        infer_on_image(model, raw_img, ax1)
 
     # plt.show()
-
+    print('Saving results')
     plt.savefig('demo.png')
 
 main()
