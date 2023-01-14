@@ -2,7 +2,7 @@
 
 #SBATCH --ntasks=10
 #SBATCH --nodes=2
-#SBATCH --cpus-per-task=5
+#SBATCH --cpus-per-task=3
 #SBATCH --mem-per-cpu=3300m
 
 #SBATCH --gpus-per-node=5
