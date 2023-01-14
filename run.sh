@@ -5,7 +5,7 @@
 #SBATCH --cpus-per-task=5
 #SBATCH --mem-per-cpu=3300m
 
-#SBATCH --gpus=12
+#SBATCH --gpus-per-node=5
 #SBATCH --gres=gpumem:20g
 #SBATCH --time=0-23:59:59
 
