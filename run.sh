@@ -4,7 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --mem-per-cpu=60G
 
-#SBATCH --gpumem:20g
+#SBATCH --gres=gpumem:20g
 #SBATCH --time=0-23:59:59
 
 #SBATCH --job-name=a3
