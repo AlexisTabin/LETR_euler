@@ -18,8 +18,8 @@ echo "Running A3"
 
 cp exp/res101_stage1_718_24h/checkpoints/checkpoint.pth exp/res101_stage1/checkpoints/checkpoint.pth
 
-rm -rf exp/res101_stage2_415_from_170_epochs/
-bash script/train/a3_train_stage2_res101.sh  res101_stage2_415_from_170_epochs
+rm -rf exp/res101_stage2_516_from_a1_with_170_epochs/
+bash script/train/a3_train_stage2_res101.sh  res101_stage2_516_from_a1_with_170_epochs
 echo "Done rendering"
 
 exit 0
