@@ -87,8 +87,8 @@ class Resize(object):
         return resize(img, size, self.max_size)
 
 
-def infer_on_image(model, raw_img, ax):
-    model_path = MODELS_DIR + model
+def infer_on_image(model_name, raw_img, ax):
+    model_path = MODELS_DIR + model_name
     
     # obtain checkpoints
     print('Loading model from {}'.format(model_path))
@@ -144,7 +144,7 @@ def infer_on_image(model, raw_img, ax):
     print('Number of structural lines: {}'.format(lines_struct.shape[0]))
     print('Plotting results')
     ax.imshow(raw_img)
-    title = ' '.join(model.split('_'))
+    title = ' '.join(model_name.split('_')[1:])
     ax.set_title(title)
     ax.axis('off')
     for tp_id, line in enumerate(lines_text):
