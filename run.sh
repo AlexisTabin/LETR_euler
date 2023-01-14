@@ -2,10 +2,13 @@
 
 #SBATCH --ntasks=5
 #SBATCH --nodes=1
+#SBATCH --cpus-per-task=5
+#SBATCH --mem-per-cpu=3300m
 
 #SBATCH --gpus=6
 #SBATCH --gres=gpumem:20g
 #SBATCH --time=0-23:59:59
+
 
 #SBATCH --job-name=a3
 #SBATCH --output=a3.out
