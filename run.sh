@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#SBATCH --ntasks=6
+#SBATCH --ntasks=5
 #SBATCH --nodes=1
 #SBATCH --mem-per-cpu=40G
 
-#SBATCH --gpus-per-node=7
+#SBATCH --gpus-per-node=6
 #SBATCH --time=0-23:59:59
 
 #SBATCH --job-name=a2
@@ -13,7 +13,7 @@
 #SBATCH --mail-type=ALL    # notify on state change: BEGIN, END, FAIL or ALL
 #SBATCH --mail-user=atabin@student.ethz.ch  # who to send email notification for job stats changes
 
-echo "Allocating 6 tasks on 1 nodes with 7 GPUs per Node for 24h from a0 with 200 epochs"
+echo "Allocating 5 tasks on 1 nodes with 6 GPUs per Node for 24h from a0 with 200 epochs"
 echo "Running A2"
 
 rm -rf exp/res50_stage2_from_a0_with_200_epochs/
