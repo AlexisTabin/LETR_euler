@@ -89,7 +89,8 @@ class Resize(object):
 
 def infer_on_image(model_name, raw_img, ax):
     model_path = MODELS_DIR + model_name
-    title = ' '.join(model_name.split('_')[1:])
+    model_name_without_pth = model_name.split('.')[0]
+    title = ' '.join(model_name_without_pth.split('_')[1:])
     
     # obtain checkpoints
     print('Loading model from {}'.format(model_path))
@@ -154,7 +155,7 @@ def infer_on_image(model_name, raw_img, ax):
         p1 = (x1.detach().numpy(), y1.detach().numpy())
         p2 = (x2.detach().numpy(), y2.detach().numpy())
         temp_color = 'darkorange' if keep_labels_text[tp_id] else 'blue'
-        plt.plot([p1[0], p2[0]], [p1[1], p2[1]],
+        ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
                  linewidth=1.5, color=temp_color, zorder=1)
 
 
@@ -174,8 +175,8 @@ def main():
     axes = axes[1:]
     print("axes: ", len(axes))
     print('Running inference on image')
-    for i, model in enumerate(models):
-        infer_on_image(model, raw_img, axes[i])
+    for model, ax in zip(models, axes):
+        infer_on_image(model, raw_img, ax)
 
     # plt.show()
     print('Saving results')
