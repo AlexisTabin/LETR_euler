@@ -2,10 +2,10 @@
 
 #SBATCH --ntasks=5
 #SBATCH --nodes=1
-#SBATCH --mem-per-cpu=60G
 
-#SBATCH --gpus-per-node=rtx_3090:6
 #SBATCH --time=0-23:59:59
+#SBATCH --gpus=6
+#SBATCH --gres=gpumem:20g
 
 #SBATCH --job-name=a2
 #SBATCH --output=a2.out
