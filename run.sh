@@ -3,6 +3,7 @@
 #SBATCH --ntasks=5
 #SBATCH --nodes=1
 
+#SBATCH --gpus=6
 #SBATCH --gres=gpumem:20g
 #SBATCH --time=0-23:59:59
 
