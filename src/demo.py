@@ -171,9 +171,11 @@ def main():
     axes[0].axis('off')
     axes[0].set_title('Input Image')
 
+    axes = axes[1:]
+    print("axes: ", len(axes))
     print('Running inference on image')
-    for model, ax1 in zip(models, axes[1:]):
-        infer_on_image(model, raw_img, ax1)
+    for i, model in enumerate(models):
+        infer_on_image(model, raw_img, axes[i])
 
     # plt.show()
     print('Saving results')
