@@ -93,12 +93,14 @@ def infer_on_image(model_name, raw_img, ax):
     title = ' '.join(model_name_without_pth.split('_')[1:])
     
     # obtain checkpoints
-    print('Loading model from {}'.format(model_path))
+    print('Loading model from {}'.format(model_path), flush=True)
     checkpoint = torch.load(model_path, map_location='cpu')
 
     # load model
     args = checkpoint['args']
     args.device = 'cpu'
+    epochs = checkpoint['epoch']
+    print('Model trained for {} epochs'.format(epochs), flush=True)
     model, _, postprocessors = build_model(args)
     model.load_state_dict(checkpoint['model'])
     model.eval()
@@ -144,10 +146,11 @@ def infer_on_image(model_name, raw_img, ax):
     lines_text = lines_text.reshape(lines_text.shape[0], -1)
     lines_struct = lines_struct.reshape(lines_struct.shape[0], -1)
 
-    print('Number of text lines: {}'.format(lines_text.shape[0]))
-    print('Number of structural lines: {}'.format(lines_struct.shape[0]))
-    print('Plotting results')
+    print('Number of text lines: {}'.format(lines_text.shape[0]), flush=True)
+    print('Number of structural lines: {}'.format(lines_struct.shape[0]), flush=True)
+    print('Plotting results', flush=True)
     ax.imshow(raw_img)
+    title = title + '\n ({} epochs)'.format(epochs)
     ax.set_title(title)
     ax.axis('off')
     for tp_id, line in enumerate(lines_text):
@@ -158,10 +161,12 @@ def infer_on_image(model_name, raw_img, ax):
         ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
                  linewidth=1.5, color=temp_color, zorder=1)
 
-
 def main():
     # (deepl) scp atabin@euler.ethz.ch:/cluster/scratch/atabin/LETR_euler/exp/res50_stage1_415_24h/checkpoints/checkpoint.pth ./exp/checkpoints/checkpoint_res50_s1.pth
     models = os.listdir(MODELS_DIR)
+    models_50 = [m for m in models if 'res50' in m]
+    models_101 = [m for m in models if 'res101' in m]
+    
     # load image
     raw_img = plt.imread('../figures/demo.png')
 
@@ -173,13 +178,12 @@ def main():
     axes[0].set_title('Input Image')
 
     axes = axes[1:]
-    print("axes: ", len(axes))
-    print('Running inference on image')
+    print('Running inference on image', flush=True)
     for model, ax in zip(models, axes):
         infer_on_image(model, raw_img, ax)
 
     # plt.show()
-    print('Saving results')
+    print('Saving results', flush=True)
     plt.savefig('demo.png')
 
 main()
