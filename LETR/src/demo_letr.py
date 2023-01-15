@@ -143,3 +143,6 @@ def main():
     checkpoints = os.listdir(checkpoints_path)
     for checkpoint in checkpoints:
         infer_letr(checkpoint)
+
+if __name__ == '__main__':
+    main()
