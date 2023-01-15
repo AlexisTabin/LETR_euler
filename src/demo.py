@@ -174,7 +174,7 @@ def main():
     print("ratio: ", ratio)
 
     # compute figure size in function of image size
-    fig_width = 10
+    fig_width = 5
     fig_height = fig_width * ratio
 
     # 2 columns, 4 rows
