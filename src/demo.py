@@ -88,7 +88,6 @@ class Resize(object):
 
 
 def infer_on_image(model_name, raw_img):#, ax):
-    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
     model_path = MODELS_DIR + model_name
     model_name_without_pth = model_name.split('.')[0]
     title = ' '.join(model_name_without_pth.split('_')[1:])
@@ -150,10 +149,19 @@ def infer_on_image(model_name, raw_img):#, ax):
     print('Number of text lines: {}'.format(lines_text.shape[0]), flush=True)
     print('Number of structural lines: {}'.format(lines_struct.shape[0]), flush=True)
     print('Plotting results', flush=True)
+
+    img_h, img_w = raw_img.shape[0], raw_img.shape[1]
+    ratio = img_h / img_w
+
+    # compute figure size in function of image size
+    fig_width = 20
+    fig_height = fig_width * ratio
+
+    fig, ax = plt.subplots(1, 1, figsize=(fig_width, fig_height), frameon=False)
     ax.axis('off')
-    ax.set_title(title)
-    ax.imshow(raw_img)
+    # ax.set_title(title)
     title = title + '\n ({} epochs)'.format(epochs)
+    ax.imshow(raw_img, aspect='auto')
     for tp_id, line in enumerate(lines_text):
         y1, x1, y2, x2 = line  # this is yxyx
         p1 = (x1.detach().numpy(), y1.detach().numpy())
@@ -161,8 +169,9 @@ def infer_on_image(model_name, raw_img):#, ax):
         temp_color = 'darkorange' if keep_labels_text[tp_id] else 'blue'
         ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
                  linewidth=1.5, color=temp_color, zorder=1)
-        
-    fig.savefig(os.path.join('demo/', model_name_without_pth + '.png'), dpi=300)
+
+    plt.subplots_adjust(hspace=0, wspace=0)
+    fig.savefig(os.path.join('demo/', model_name_without_pth + '.png'), dpi=300, bbox_inches='tight', pad_inches=0)
     plt.close(fig)
 
 def main():
@@ -172,10 +181,8 @@ def main():
     # load image
     raw_img = plt.imread('../figures/demo.png')
 
-    print(raw_img.shape)
     img_h, img_w = raw_img.shape[0], raw_img.shape[1]
     ratio = img_h / img_w
-    print("ratio: ", ratio)
 
     # compute figure size in function of image size
     fig_width = 20
