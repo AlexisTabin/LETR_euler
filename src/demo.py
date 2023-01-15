@@ -151,16 +151,13 @@ def infer_on_image(model_name, raw_img, ax):
     print('Plotting results', flush=True)
 
     img_h, img_w = raw_img.shape[0], raw_img.shape[1]
-    ratio = img_h / img_w
+    fig_width = img_w / 20
+    fig_height = img_h / 20
 
-    # compute figure size in function of image size
-    fig_width = 20
-    fig_height = fig_width * ratio
-
-    # fig, ax = plt.subplots(1, 1, figsize=(fig_width, fig_height), frameon=False)
+    fig, ax = plt.subplots(1, 1, figsize=(fig_width, fig_height), frameon=True)
     ax.axis('off')
-    ax.set_title(title)
     title = title + '\n ({} epochs)'.format(epochs)
+    ax.set_title(title)
     ax.imshow(raw_img)
     for tp_id, line in enumerate(lines_text):
         y1, x1, y2, x2 = line  # this is yxyx
@@ -168,11 +165,10 @@ def infer_on_image(model_name, raw_img, ax):
         p2 = (x2.detach().numpy(), y2.detach().numpy())
         temp_color = 'darkorange' if keep_labels_text[tp_id] else 'blue'
         ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
-                 linewidth=1.5, color=temp_color, zorder=1)
+                 linewidth=2.5, color=temp_color, zorder=1)
 
-    # plt.subplots_adjust(hspace=0, wspace=0)
-    # fig.savefig(os.path.join('demo/', model_name_without_pth + '.png'), dpi=300, bbox_inches='tight', pad_inches=0)
-    # plt.close(fig)
+    fig.savefig(os.path.join('demo/', model_name_without_pth + '.png'), dpi=300, bbox_inches='tight', pad_inches=0)
+    plt.close(fig)
 
 def main():
     # (deepl) scp atabin@euler.ethz.ch:/cluster/scratch/atabin/LETR_euler/exp/res50_stage1_415_24h/checkpoints/checkpoint.pth ./exp/checkpoints/checkpoint_res50_s1.pth
@@ -197,18 +193,6 @@ def main():
     fig, axes = plt.subplots(4, 2, figsize=(fig_width, fig_height))
     fig.suptitle('Demo')
 
-    axes[0][0].imshow(raw_img)
-    axes[0][0].axis('off')
-    axes[0][0].set_title('Input Image')
-    axes[0][1].imshow(raw_img)
-    axes[0][1].axis('off')
-    axes[0][1].set_title('GT')
-
-    axes[3][0].axis('off')
-    axes[3][1].axis('off')
-    axes[3][1].figure.savefig(os.path.join('demo/', 'test'+ '.png'), dpi=300)
-
-
     print('Running inference on image', flush=True)
     for model in models:
         if 'res50' in model:
@@ -232,6 +216,6 @@ def main():
 
     # plt.show()
     print('Saving results', flush=True)
-    plt.savefig('demo.png', bbox_inches='tight', pad_inches=0)
+    # plt.savefig('demo.png', bbox_inches='tight', pad_inches=0)
 
 main()
