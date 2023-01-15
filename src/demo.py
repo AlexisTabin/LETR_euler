@@ -143,7 +143,6 @@ def infer_on_image(model_name, raw_img, ax):
     scores = scores.detach().numpy()
     keep = scores > 0.7
     keep = keep.squeeze()
-    lines = lines[keep]
 
     labels_text_ids = labels == 2
     labels_text_ids = labels_text_ids.squeeze()
