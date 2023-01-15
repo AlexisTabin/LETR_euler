@@ -161,7 +161,7 @@ def infer_on_image(model_name, raw_img):#, ax):
     ax.axis('off')
     # ax.set_title(title)
     title = title + '\n ({} epochs)'.format(epochs)
-    ax.imshow(raw_img, aspect='auto')
+    ax.imshow(raw_img)
     for tp_id, line in enumerate(lines_text):
         y1, x1, y2, x2 = line  # this is yxyx
         p1 = (x1.detach().numpy(), y1.detach().numpy())
