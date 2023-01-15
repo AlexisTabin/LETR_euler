@@ -160,6 +160,7 @@ def infer_on_image(model_name, raw_img, ax):
         temp_color = 'darkorange' if keep_labels_text[tp_id] else 'blue'
         ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
                  linewidth=1.5, color=temp_color, zorder=1)
+    ax.savefig(os.path.join('demo/', model_name_without_pth + '.png'), dpi=300)
 
 def main():
     # (deepl) scp atabin@euler.ethz.ch:/cluster/scratch/atabin/LETR_euler/exp/res50_stage1_415_24h/checkpoints/checkpoint.pth ./exp/checkpoints/checkpoint_res50_s1.pth
