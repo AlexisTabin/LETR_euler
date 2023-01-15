@@ -175,7 +175,7 @@ def main():
     models = os.listdir(MODELS_DIR)
     
     # load image
-    raw_img = plt.imread('../figures/demo.png')
+    raw_img = plt.imread('../figures/demo.jpg')
 
     img_h, img_w = raw_img.shape[0], raw_img.shape[1]
     img_h = img_h / 20
@@ -216,6 +216,6 @@ def main():
 
     # plt.show()
     print('Saving results', flush=True)
-    # plt.savefig('demo.png', bbox_inches='tight', pad_inches=0)
+    # plt.savefig('demo.jpg', bbox_inches='tight', pad_inches=0)
 
 main()
