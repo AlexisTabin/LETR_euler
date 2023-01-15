@@ -184,11 +184,12 @@ def main():
     axes[0][1].set_title('GT')
 
     print('Running inference on image', flush=True)
-    for model in models_50:
+    for model in models:
         if 'res50' in model:
             column = 0
         else:
             column = 1
+
         if 's1' in model:
             row = 1
         elif 's2' in model:
