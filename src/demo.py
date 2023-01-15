@@ -134,15 +134,17 @@ def infer_on_image(model_name, raw_img, ax):
     lines = lines.view(1000, 2, 2)
     lines = lines.flip([-1])  # this is yxyx format
     scores = scores.detach().numpy()
-    keep = scores >= 0.7
-    keep_labels_struct = labels == 0
-    keep_labels_text = labels == 2
+    keep = scores > 0.7
+    lines = lines[keep]
 
-    keep_labels_text = keep_labels_text.squeeze()
-    keep_labels_struct = keep_labels_struct.squeeze()
+    labels_text_ids = labels == 2
+    labels_text_ids = labels_text_ids.squeeze()
+    lines_text = lines[labels_text_ids & keep]
 
-    lines_text = lines[keep_labels_text]
-    lines_struct = lines[keep_labels_struct]
+    labels_struct_ids = labels == 0
+    labels_struct_ids = labels_struct_ids.squeeze()
+    lines_struct = lines[labels_struct_ids & keep]
+
     lines_text = lines_text.reshape(lines_text.shape[0], -1)
     lines_struct = lines_struct.reshape(lines_struct.shape[0], -1)
 
@@ -163,7 +165,7 @@ def infer_on_image(model_name, raw_img, ax):
         y1, x1, y2, x2 = line  # this is yxyx
         p1 = (x1.detach().numpy(), y1.detach().numpy())
         p2 = (x2.detach().numpy(), y2.detach().numpy())
-        temp_color = 'darkorange' if keep_labels_text[tp_id] else 'blue'
+        temp_color = 'darkorange' if labels_text_ids[tp_id] else 'blue'
         ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
                  linewidth=2.5, color=temp_color, zorder=1)
 
