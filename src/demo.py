@@ -174,7 +174,7 @@ def main():
     print("ratio: ", ratio)
 
     # compute figure size in function of image size
-    fig_width = 5
+    fig_width = 20
     fig_height = fig_width * ratio
 
     # 2 columns, 4 rows
@@ -207,8 +207,8 @@ def main():
         else:
             row = 3
 
-        print("Model: ", model)
-        print("Row: ", row)
+        print("Model : ", model)
+        print("Row   : ", row)
         print("Column: ", column)
 
         ax = axes[row][column]
