@@ -170,16 +170,33 @@ def main():
     # load image
     raw_img = plt.imread('../figures/demo.png')
 
-    fig, axes = plt.subplots(1, len(models) + 1, figsize=(20, 10))
+    # 2 columns, 4 rows
+    # first column for resnet50, second for resnet101
+    # first row for input image, second for stage1, third for stage2, fourth for stage3
+    fig, axes = plt.subplots(2, 4, figsize=(40, 20))
     fig.suptitle('Demo')
 
-    axes[0].imshow(raw_img)
-    axes[0].axis('off')
-    axes[0].set_title('Input Image')
+    axes[0][0].imshow(raw_img)
+    axes[0][0].axis('off')
+    axes[0][0].set_title('Input Image')
+    axes[0][1].imshow(raw_img)
+    axes[0][1].axis('off')
+    axes[0][1].set_title('GT')
 
-    axes = axes[1:]
     print('Running inference on image', flush=True)
-    for model, ax in zip(models, axes):
+    for model in models_50:
+        if 'res50' in model:
+            column = 0
+        else:
+            column = 1
+        if 's1' in model:
+            row = 1
+        elif 's2' in model:
+            row = 2
+        else:
+            row = 3
+
+        ax = axes[row][column]
         infer_on_image(model, raw_img, ax)
 
     # plt.show()
