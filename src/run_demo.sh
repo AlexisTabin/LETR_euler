@@ -21,6 +21,9 @@ cp $EXP_PATH/res50_stage1_415_24h/checkpoints/checkpoint.pth $EXP_PATH/checkpoin
 cp $EXP_PATH/res50_stage2_617_24h/checkpoints/checkpoint.pth $EXP_PATH/checkpoints/checkpoint_res50_s2.pth
 cp $EXP_PATH/res101_stage1_718_24h/checkpoints/checkpoint.pth $EXP_PATH/checkpoints/checkpoint_res101_s1.pth
 cp $EXP_PATH/res101_stage2_415/checkpoints/checkpoint.pth $EXP_PATH/checkpoints/checkpoint_res101_s2.pth
+cp $EXP_PATH/res50_stage2_from_a0_with_200_epochs/checkpoints/checkpoint.pth $EXP_PATH/checkpoints/checkpoint_res50_s2_a0-200.pth
+cp $EXP_PATH/res101_stage2_516_from_a1_with_170_epochs/checkpoints/checkpoint.pth $EXP_PATH/checkpoints/checkpoint_res101_s2_a1-170.pth
+
 
 python3 demo.py
 
