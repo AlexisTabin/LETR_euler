@@ -154,7 +154,7 @@ def infer_on_image(model_name, raw_img, ax):
     fig_width = img_w / 20
     fig_height = img_h / 20
 
-    fig, ax = plt.subplots(1, 1, figsize=(fig_width, fig_height), frameon=True)
+    fig, ax = plt.subplots(1, 1, figsize=(fig_width, fig_height), frameon=False)
     ax.axis('off')
     title = title + '\n ({} epochs)'.format(epochs)
     ax.set_title(title)
