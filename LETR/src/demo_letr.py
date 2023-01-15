@@ -81,8 +81,8 @@ class Resize(object):
 
 checkpoints_path = '../../exp/letr_chkpt/'
 
-def infer_letr(checkpoint):
-    model_path = checkpoints_path + checkpoint
+def infer_letr(checkpoint_name):
+    model_path = checkpoints_path + checkpoint_name
     # obtain checkpoints
     checkpoint = torch.load(model_path, map_location='cpu')
 
@@ -136,7 +136,7 @@ def infer_letr(checkpoint):
         plt.plot([p1[0].detach().numpy(), p2[0].detach().numpy()], [p1[1].detach().numpy(), p2[1].detach().numpy()], linewidth=1.5, color='darkorange', zorder=1)
     plt.axis('off')
 
-    title = checkpoint.split('.')[0] + f'_w_epochs_{epochs}'
+    title = checkpoint_name.split('.')[0] + f'_w_epochs_{epochs}'
     plt.savefig(f"../figures/{title}.png", dpi=300, bbox_inches='tight', pad_inches = 0)
     plt.close(fig)
 
