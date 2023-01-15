@@ -133,7 +133,7 @@ def infer_letr(checkpoint):
         y1, x1, y2, x2 = line # this is yxyx
         p1 = (x1, y1)
         p2 = (x2, y2)
-        plt.plot([p1[0], p2[0]], [p1[1], p2[1]], linewidth=1.5, color='darkorange', zorder=1)
+        plt.plot([p1[0].detach().numpy(), p2[0].detach().numpy()], [p1[1].detach().numpy(), p2[1].detach().numpy()], linewidth=1.5, color='darkorange', zorder=1)
     plt.axis('off')
 
     title = checkpoint.split('.')[0] + f'_w_epochs_{epochs}'
