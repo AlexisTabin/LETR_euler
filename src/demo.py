@@ -192,6 +192,9 @@ def main():
     axes[0][1].axis('off')
     axes[0][1].set_title('GT')
 
+    axes[3][0].axis('off')
+    axes[3][1].axis('off')
+
     print('Running inference on image', flush=True)
     for model in models:
         if 'res50' in model:
