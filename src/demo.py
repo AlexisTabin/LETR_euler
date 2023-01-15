@@ -200,9 +200,9 @@ def main():
         else:
             column = 1
 
-        if '_s1_' in model:
+        if '_s1' in model:
             row = 1
-        elif '_s2_' in model:
+        elif '_s2' in model:
             row = 2
         else:
             row = 3
