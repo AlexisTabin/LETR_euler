@@ -182,7 +182,10 @@ def main():
     raw_img = plt.imread('../figures/demo.png')
 
     img_h, img_w = raw_img.shape[0], raw_img.shape[1]
+    img_h = img_h / 20
+    img_w = img_w / 20
     ratio = img_h / img_w
+    print('Image size: {}x{}'.format(img_w, img_h), flush=True)
 
     # compute figure size in function of image size
     fig_width = img_h*2 + 6
