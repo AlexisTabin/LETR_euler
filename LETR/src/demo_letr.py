@@ -95,7 +95,7 @@ def infer_letr(checkpoint_name):
     model.eval()
 
     # load image
-    raw_img = plt.imread('../figures/demo.png')
+    raw_img = plt.imread('../figures/demo.jpg')
     h, w = raw_img.shape[0], raw_img.shape[1]
     orig_size = torch.as_tensor([int(h), int(w)])
 
