@@ -118,7 +118,7 @@ def infer_on_image(model_name, raw_img, ax):
     img = normalize(raw_img)
     inputs = nested_tensor_from_tensor_list([img])
 
-    if 's1' in title:
+    if ' s1 ' in title:
         outputs = model(inputs)
     else:
         outputs = model(inputs)[0]
@@ -164,8 +164,6 @@ def infer_on_image(model_name, raw_img, ax):
 def main():
     # (deepl) scp atabin@euler.ethz.ch:/cluster/scratch/atabin/LETR_euler/exp/res50_stage1_415_24h/checkpoints/checkpoint.pth ./exp/checkpoints/checkpoint_res50_s1.pth
     models = os.listdir(MODELS_DIR)
-    models_50 = [m for m in models if 'res50' in m]
-    models_101 = [m for m in models if 'res101' in m]
     
     # load image
     raw_img = plt.imread('../figures/demo.png')
