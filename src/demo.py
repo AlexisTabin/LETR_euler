@@ -118,7 +118,7 @@ def infer_on_image(model_name, raw_img, ax):
     img = normalize(raw_img)
     inputs = nested_tensor_from_tensor_list([img])
 
-    if ' s1 ' in title:
+    if ' s1' in title:
         outputs = model(inputs)
     else:
         outputs = model(inputs)[0]
