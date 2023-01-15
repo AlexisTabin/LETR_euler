@@ -202,9 +202,9 @@ def main():
         else:
             column = 1
 
-        if 's1' in model:
+        if '_s1_' in model:
             row = 1
-        elif 's2' in model:
+        elif '_s2_' in model:
             row = 2
         else:
             row = 3
