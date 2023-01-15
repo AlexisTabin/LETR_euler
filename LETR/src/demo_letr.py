@@ -88,6 +88,7 @@ def infer_letr(checkpoint):
 
     # load model
     args = checkpoint['args']
+    args.device = 'cpu'
     model, _, _ = build_model(args)
     model.load_state_dict(checkpoint['model'])
     epochs = checkpoint['epoch']
