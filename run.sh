@@ -1,24 +1,25 @@
 #!/bin/bash
 
-#SBATCH --ntasks=2
+#SBATCH --ntasks=6
 #SBATCH --nodes=1
-#SBATCH --mem-per-cpu=40G
+#SBATCH --cpus-per-task=3
+#SBATCH --mem-per-cpu=3300m
 
-#SBATCH --gpus-per-node=4
-#SBATCH --time=0-11:59:59
+#SBATCH --gpus-per-node=7
+#SBATCH --gres=gpumem:20g
+#SBATCH --time=0-23:59:59
 
-#SBATCH --job-name=4h_r50_214_s3
-#SBATCH --output=4h_r50_214_s3.out
-#SBATCH --error=4h_r50_214_s3.err
+
+#SBATCH --job-name=a4
+#SBATCH --output=a4.out
 
 #SBATCH --mail-type=ALL    # notify on state change: BEGIN, END, FAIL or ALL
 #SBATCH --mail-user=atabin@student.ethz.ch  # who to send email notification for job stats changes
 
-echo "Allocating 2 tasks on 1 nodes with 4 GPUs per Node for 12h from resume"
 echo "Running A4"
 
-rm -rf exp/res50_stage3_214_12h_resumed/
-bash script/train/a4_train_stage2_focal_res50.sh  res50_stage3_214_12h_resumed
+rm -rf exp/a4/
+bash script/train/a4_train_stage2_focal_res50.sh  a4
 echo "Done rendering"
 
 exit 0
