@@ -150,10 +150,10 @@ def infer_on_image(model_name, raw_img):#, ax):
     print('Number of text lines: {}'.format(lines_text.shape[0]), flush=True)
     print('Number of structural lines: {}'.format(lines_struct.shape[0]), flush=True)
     print('Plotting results', flush=True)
+    ax.axis('off')
+    ax.set_title(title)
     ax.imshow(raw_img)
     title = title + '\n ({} epochs)'.format(epochs)
-    ax.set_title(title)
-    ax.axis('off')
     for tp_id, line in enumerate(lines_text):
         y1, x1, y2, x2 = line  # this is yxyx
         p1 = (x1.detach().numpy(), y1.detach().numpy())
