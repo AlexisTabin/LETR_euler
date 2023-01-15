@@ -88,7 +88,7 @@ class Resize(object):
 
 
 def infer_on_image(model_name, raw_img):#, ax):
-    ax = plt.figure()
+    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
     model_path = MODELS_DIR + model_name
     model_name_without_pth = model_name.split('.')[0]
     title = ' '.join(model_name_without_pth.split('_')[1:])
@@ -161,7 +161,7 @@ def infer_on_image(model_name, raw_img):#, ax):
         temp_color = 'darkorange' if keep_labels_text[tp_id] else 'blue'
         ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
                  linewidth=1.5, color=temp_color, zorder=1)
-    
+        
     ax.savefig(os.path.join('demo/', model_name_without_pth + '.png'), dpi=300)
 
 def main():
