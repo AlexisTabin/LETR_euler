@@ -1,11 +1,11 @@
 #!/bin/bash
 
-#SBATCH --ntasks=6
+#SBATCH --ntasks=1
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=3
 #SBATCH --mem-per-cpu=3300m
 
-#SBATCH --gpus-per-node=7
+#SBATCH --gpus-per-node=2
 #SBATCH --gres=gpumem:20g
 #SBATCH --time=0-23:59:59
 
