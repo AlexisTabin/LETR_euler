@@ -170,10 +170,19 @@ def main():
     # load image
     raw_img = plt.imread('../figures/demo.png')
 
+    print(raw_img.shape)
+    img_h, img_w = raw_img.shape[0], raw_img.shape[1]
+    ratio = img_h / img_w
+    print("ratio: ", ratio)
+
+    # compute figure size in function of image size
+    fig_width = 20
+    fig_height = fig_width * ratio
+
     # 2 columns, 4 rows
     # first column for resnet50, second for resnet101
-    # first row for input image, second for stage1, third for stage2, fourth for stage3
-    fig, axes = plt.subplots(4, 2, figsize=(20, 10))
+    # first row for input image, second for stage1, third for stage2, fourth for stage3    
+    fig, axes = plt.subplots(4, 2, figsize=(fig_width, fig_height))
     fig.suptitle('Demo')
 
     axes[0][0].imshow(raw_img)
