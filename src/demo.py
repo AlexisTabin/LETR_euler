@@ -87,7 +87,8 @@ class Resize(object):
         return resize(img, size, self.max_size)
 
 
-def infer_on_image(model_name, raw_img, ax):
+def infer_on_image(model_name, raw_img):#, ax):
+    ax = plt.figure()
     model_path = MODELS_DIR + model_name
     model_name_without_pth = model_name.split('.')[0]
     title = ' '.join(model_name_without_pth.split('_')[1:])
@@ -160,6 +161,7 @@ def infer_on_image(model_name, raw_img, ax):
         temp_color = 'darkorange' if keep_labels_text[tp_id] else 'blue'
         ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
                  linewidth=1.5, color=temp_color, zorder=1)
+    
     ax.savefig(os.path.join('demo/', model_name_without_pth + '.png'), dpi=300)
 
 def main():
@@ -181,18 +183,20 @@ def main():
     # 2 columns, 4 rows
     # first column for resnet50, second for resnet101
     # first row for input image, second for stage1, third for stage2, fourth for stage3    
-    fig, axes = plt.subplots(4, 2, figsize=(fig_width, fig_height))
-    fig.suptitle('Demo')
+    # fig, axes = plt.subplots(4, 2, figsize=(fig_width, fig_height))
+    # fig.suptitle('Demo')
 
-    axes[0][0].imshow(raw_img)
-    axes[0][0].axis('off')
-    axes[0][0].set_title('Input Image')
-    axes[0][1].imshow(raw_img)
-    axes[0][1].axis('off')
-    axes[0][1].set_title('GT')
+    # axes[0][0].imshow(raw_img)
+    # axes[0][0].axis('off')
+    # axes[0][0].set_title('Input Image')
+    # axes[0][1].imshow(raw_img)
+    # axes[0][1].axis('off')
+    # axes[0][1].set_title('GT')
 
-    axes[3][0].axis('off')
-    axes[3][1].axis('off')
+    # axes[3][0].axis('off')
+    # axes[3][1].axis('off')
+    # axes[3][1].figure.savefig(os.path.join('demo/', 'test'+ '.png'), dpi=300)
+
 
     print('Running inference on image', flush=True)
     for model in models:
@@ -212,8 +216,8 @@ def main():
         print("Row   : ", row)
         print("Column: ", column)
 
-        ax = axes[row][column]
-        infer_on_image(model, raw_img, ax)
+        # ax = axes[row][column]
+        infer_on_image(model, raw_img)#, ax)
 
     # plt.show()
     print('Saving results', flush=True)
