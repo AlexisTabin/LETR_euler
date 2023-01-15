@@ -86,6 +86,13 @@ class Resize(object):
         size = self.sizes
         return resize(img, size, self.max_size)
 
+def plot_line_on_img(lines, ax, color='darkorange'):
+    for line in lines:
+        y1, x1, y2, x2 = line  # this is yxyx
+        p1 = (x1.detach().numpy(), y1.detach().numpy())
+        p2 = (x2.detach().numpy(), y2.detach().numpy())
+        ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
+                 linewidth=2.5, color=color, zorder=1)
 
 def infer_on_image(model_name, raw_img, ax):
     model_path = MODELS_DIR + model_name
@@ -135,15 +142,18 @@ def infer_on_image(model_name, raw_img, ax):
     lines = lines.flip([-1])  # this is yxyx format
     scores = scores.detach().numpy()
     keep = scores > 0.7
+    keep = keep.squeeze()
     lines = lines[keep]
 
     labels_text_ids = labels == 2
     labels_text_ids = labels_text_ids.squeeze()
-    lines_text = lines[labels_text_ids & keep]
+    mask_text = labels_text_ids & keep
+    lines_text = lines[mask_text]
 
     labels_struct_ids = labels == 0
     labels_struct_ids = labels_struct_ids.squeeze()
-    lines_struct = lines[labels_struct_ids & keep]
+    struct_mask = labels_struct_ids & keep
+    lines_struct = lines[struct_mask]
 
     lines_text = lines_text.reshape(lines_text.shape[0], -1)
     lines_struct = lines_struct.reshape(lines_struct.shape[0], -1)
@@ -161,14 +171,8 @@ def infer_on_image(model_name, raw_img, ax):
     title = title + '\n ({} epochs)'.format(epochs)
     ax.set_title(title)
     ax.imshow(raw_img)
-    for tp_id, line in enumerate(lines_text):
-        y1, x1, y2, x2 = line  # this is yxyx
-        p1 = (x1.detach().numpy(), y1.detach().numpy())
-        p2 = (x2.detach().numpy(), y2.detach().numpy())
-        temp_color = 'darkorange' if labels_text_ids[tp_id] else 'blue'
-        ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
-                 linewidth=2.5, color=temp_color, zorder=1)
-
+    plot_line_on_img(lines_text, ax, color='darkorange')
+    plot_line_on_img(lines_struct, ax, color='blue')
     fig.savefig(os.path.join('demo/', model_name_without_pth + '.png'), dpi=300, bbox_inches='tight', pad_inches=0)
     plt.close(fig)
 
