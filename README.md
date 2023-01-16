@@ -1,7 +1,7 @@
 # LETR Adapted : Line Segment Detection Using Transformers without Edges used to detect lines and classify them into textural/structural lines in an end-to-end fashion
 
 ## Introduction 
-This repository contains an adapted version of the official code and pretrained models for [Line Segment Detection Using Transformers without Edges](https://arxiv.org/abs/2101.01909). [Yifan Xu*](https://yfxu.com/), [Weijian Xu*](https://weijianxu.com/), [David Cheung](https://github.com/sawsa307), and [Zhuowen Tu](https://pages.ucsd.edu/~ztu/). CVPR2021 (**Oral**)
+This repository contains an adapted version of the official code and pretrained models for [Line Segment Detection Using Transformers without Edges](https://arxiv.org/abs/2101.01909).
 
 ## Results and Checkpoints
 
