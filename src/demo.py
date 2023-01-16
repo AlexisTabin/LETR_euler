@@ -225,7 +225,7 @@ def main():
             print("Column: ", column)
 
             ax = axes[row][column]
-            demo_nm = model.split('.')[0]
+            demo_nm = demo.split('.')[0]
             infer_on_image(model, raw_img, ax, demo_nm)
 
         # plt.show()
