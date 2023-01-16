@@ -225,7 +225,10 @@ def main():
             print("Column: ", column)
 
             ax = axes[row][column]
-            demo_nm = demo.split('.')[0]
+            # demo = frame.name.00.00.jpg
+            demo_nm = demo.split('.')[:-1]
+            demo_nm = '_'.join(demo_nm)
+
             infer_on_image(model, raw_img, ax, demo_nm)
 
         # plt.show()
