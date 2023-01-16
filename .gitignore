@@ -8,3 +8,5 @@ evaluation/
 wandb/
 data_normals/
 *.csv
+data_letr/
+
