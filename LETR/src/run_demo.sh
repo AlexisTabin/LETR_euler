@@ -8,7 +8,7 @@
 #SBATCH --time=0-3:59:59
 
 #SBATCH --job-name=demo_letr
-#SBATCH --output=demo.out
+#SBATCH --output=demo_letr.out
 
 
 echo "Running LETR demo"
