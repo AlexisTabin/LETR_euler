@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 #SBATCH --ntasks=2
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=3
@@ -16,6 +17,7 @@
 
 #SBATCH --mail-type=ALL    # notify on state change: BEGIN, END, FAIL or ALL
 #SBATCH --mail-user=atabin@student.ethz.ch  # who to send email notification for job stats changes
+
 
 echo "Running A5"
 
