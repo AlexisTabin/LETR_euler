@@ -9,7 +9,7 @@ from models import build_model
 from util.misc import nested_tensor_from_tensor_list
 import os
 
-DEMO_DIR = '../figures/demos/
+DEMO_DIR = '../figures/demos/'
 
 class Compose(object):
     def __init__(self, transforms):
