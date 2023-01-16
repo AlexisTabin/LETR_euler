@@ -9,6 +9,8 @@ from models import build_model
 from util.misc import nested_tensor_from_tensor_list
 import os
 
+DEMO_DIR = '../figures/demos/
+
 class Compose(object):
     def __init__(self, transforms):
         self.transforms = transforms
@@ -81,7 +83,7 @@ class Resize(object):
 
 PATH_TO_CHECKPOINTS = '../../exp/letr_chkpt/'
 
-def infer_letr(checkpoint_name):
+def infer_letr(checkpoint_name, demo_name):
     model_path = PATH_TO_CHECKPOINTS + checkpoint_name
     # obtain checkpoints
     checkpoint = torch.load(model_path, map_location='cpu')
@@ -95,7 +97,7 @@ def infer_letr(checkpoint_name):
     model.eval()
 
     # load image
-    raw_img = plt.imread('../figures/demo.jpg')
+    raw_img = plt.imread(demo_name)
     h, w = raw_img.shape[0], raw_img.shape[1]
     orig_size = torch.as_tensor([int(h), int(w)])
 
@@ -137,13 +139,16 @@ def infer_letr(checkpoint_name):
     plt.axis('off')
 
     title = checkpoint_name.split('.')[0] + f'_w_epochs_{epochs}'
-    plt.savefig(f"../figures/{title}.png", dpi=300, bbox_inches='tight', pad_inches = 0)
+    plt.savefig(f"../figures/{demo_name}_{title}.png", dpi=300, bbox_inches='tight', pad_inches = 0)
     plt.close(fig)
 
 def main():
     checkpoints = os.listdir(PATH_TO_CHECKPOINTS)
-    for checkpoint in checkpoints:
-        infer_letr(checkpoint)
+    demos = os.listdir(DEMO_DIR)
+    for demo_name in demos:
+        demo_name = DEMO_DIR + demo_name
+        for checkpoint in checkpoints:
+            infer_letr(checkpoint, demo_name)
 
 if __name__ == '__main__':
     main()
