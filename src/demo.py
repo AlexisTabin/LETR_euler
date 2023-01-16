@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 plt.rcParams['figure.dpi'] = 200
 
 MODELS_DIR = '../exp/checkpoints/'
+DEMOS_DIR = '../figures/demos/'
 
 class Compose(object):
     def __init__(self, transforms):
@@ -94,7 +95,7 @@ def plot_line_on_img(lines, ax, color='darkorange'):
         ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
                  linewidth=1, color=color, zorder=1)
 
-def infer_on_image(model_name, raw_img, ax):
+def infer_on_image(model_name, raw_img, ax, demo):
     model_path = MODELS_DIR + model_name
     model_name_without_pth = model_name.split('.')[0]
     title = ' '.join(model_name_without_pth.split('_')[1:])
@@ -172,55 +173,63 @@ def infer_on_image(model_name, raw_img, ax):
     ax.imshow(raw_img)
     plot_line_on_img(lines_text, ax, color='darkorange')
     plot_line_on_img(lines_struct, ax, color='blue')
-    fig.savefig(os.path.join('demo/', model_name_without_pth + '.png'), dpi=300, bbox_inches='tight', pad_inches=0)
+    
+    demo_path = os.path.join('demo/', demo)
+    os.mkaedirs(demo_path, exist_ok=True)
+    fig.savefig(os.path.join(demo_path, model_name_without_pth + '.png'), dpi=300, bbox_inches='tight', pad_inches=0)
     plt.close(fig)
 
 def main():
     # (deepl) scp atabin@euler.ethz.ch:/cluster/scratch/atabin/LETR_euler/exp/res50_stage1_415_24h/checkpoints/checkpoint.pth ./exp/checkpoints/checkpoint_res50_s1.pth
+    demos = os.listdir(DEMOS_DIR)
     models = os.listdir(MODELS_DIR)
     
-    # load image
-    raw_img = plt.imread('../figures/demo.jpg')
+    for demo in demos:
+        demo_path = os.path.join(DEMOS_DIR, demo)
+        # load image
+        raw_img = plt.imread(demo_path)
+        
 
-    img_h, img_w = raw_img.shape[0], raw_img.shape[1]
-    img_h = img_h / 20
-    img_w = img_w / 20
-    ratio = img_h / img_w
-    print('Image size: {}x{}'.format(img_w, img_h), flush=True)
+        img_h, img_w = raw_img.shape[0], raw_img.shape[1]
+        img_h = img_h / 20
+        img_w = img_w / 20
+        ratio = img_h / img_w
+        print('Image size: {}x{}'.format(img_w, img_h), flush=True)
 
-    # compute figure size in function of image size
-    fig_width = img_h*2 + 6
-    fig_height = img_h*3 + 9
+        # compute figure size in function of image size
+        fig_width = img_h*2 + 6
+        fig_height = img_h*3 + 9
 
-    # 2 columns, 4 rows
-    # first column for resnet50, second for resnet101
-    # first row for input image, second for stage1, third for stage2, fourth for stage3    
-    fig, axes = plt.subplots(4, 2, figsize=(fig_width, fig_height))
-    fig.suptitle('Demo')
+        # 2 columns, 4 rows
+        # first column for resnet50, second for resnet101
+        # first row for input image, second for stage1, third for stage2, fourth for stage3    
+        fig, axes = plt.subplots(4, 2, figsize=(fig_width, fig_height))
+        fig.suptitle('Demo')
 
-    print('Running inference on image', flush=True)
-    for model in models:
-        if 'res50' in model:
-            column = 0
-        else:
-            column = 1
+        print('Running inference on image', flush=True)
+        for model in models:
+            if 'res50' in model:
+                column = 0
+            else:
+                column = 1
 
-        if '_s1' in model:
-            row = 1
-        elif '_s2' in model:
-            row = 2
-        else:
-            row = 3
+            if '_s1' in model:
+                row = 1
+            elif '_s2' in model:
+                row = 2
+            else:
+                row = 3
 
-        print("Model : ", model)
-        print("Row   : ", row)
-        print("Column: ", column)
+            print("Model : ", model)
+            print("Row   : ", row)
+            print("Column: ", column)
 
-        ax = axes[row][column]
-        infer_on_image(model, raw_img, ax)
+            ax = axes[row][column]
+            demo_nm = model.split('.')[0]
+            infer_on_image(model, raw_img, ax, demo_nm)
 
-    # plt.show()
-    print('Saving results', flush=True)
-    # plt.savefig('demo.jpg', bbox_inches='tight', pad_inches=0)
+        # plt.show()
+        print('Saving results', flush=True)
+        # plt.savefig('demo.jpg', bbox_inches='tight', pad_inches=0)
 
 main()
