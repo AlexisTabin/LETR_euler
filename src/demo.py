@@ -171,8 +171,8 @@ def infer_on_image(model_name, raw_img, ax, demo):
     # title = title + '\n ({} epochs)'.format(epochs)
     # ax.set_title(title)
     ax.imshow(raw_img)
-    plot_line_on_img(lines_text, ax, color='darkorange')
-    plot_line_on_img(lines_struct, ax, color='blue')
+    plot_line_on_img(lines_text, ax, color='blue')
+    plot_line_on_img(lines_struct, ax, color='darkorange')
     
     demo_path = os.path.join('demo/', demo)
     os.makedirs(demo_path, exist_ok=True)
