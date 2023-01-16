@@ -92,7 +92,7 @@ def plot_line_on_img(lines, ax, color='darkorange'):
         p1 = (x1.detach().numpy(), y1.detach().numpy())
         p2 = (x2.detach().numpy(), y2.detach().numpy())
         ax.plot([p1[0], p2[0]], [p1[1], p2[1]],
-                 linewidth=1.5, color=color, zorder=1)
+                 linewidth=1, color=color, zorder=1)
 
 def infer_on_image(model_name, raw_img, ax):
     model_path = MODELS_DIR + model_name
@@ -141,7 +141,7 @@ def infer_on_image(model_name, raw_img, ax):
     lines = lines.view(1000, 2, 2)
     lines = lines.flip([-1])  # this is yxyx format
     scores = scores.detach().numpy()
-    keep = scores > 0.8
+    keep = scores > 0.75
     keep = keep.squeeze()
 
     labels_text_ids = labels == 2
