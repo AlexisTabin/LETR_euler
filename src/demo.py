@@ -168,8 +168,8 @@ def infer_on_image(model_name, raw_img, ax, demo):
 
     fig, ax = plt.subplots(1, 1, frameon=False)
     ax.axis('off')
-    title = title + '\n ({} epochs)'.format(epochs)
-    ax.set_title(title)
+    # title = title + '\n ({} epochs)'.format(epochs)
+    # ax.set_title(title)
     ax.imshow(raw_img)
     plot_line_on_img(lines_text, ax, color='darkorange')
     plot_line_on_img(lines_struct, ax, color='blue')
