@@ -79,10 +79,10 @@ class Resize(object):
         size = self.sizes
         return resize(img, size, self.max_size)
 
-checkpoints_path = '../../exp/letr_chkpt/'
+PATH_TO_CHECKPOINTS = '../../exp/letr_chkpt/'
 
 def infer_letr(checkpoint_name):
-    model_path = checkpoints_path + checkpoint_name
+    model_path = PATH_TO_CHECKPOINTS + checkpoint_name
     # obtain checkpoints
     checkpoint = torch.load(model_path, map_location='cpu')
 
@@ -141,7 +141,7 @@ def infer_letr(checkpoint_name):
     plt.close(fig)
 
 def main():
-    checkpoints = os.listdir(checkpoints_path)
+    checkpoints = os.listdir(PATH_TO_CHECKPOINTS)
     for checkpoint in checkpoints:
         infer_letr(checkpoint)
 
