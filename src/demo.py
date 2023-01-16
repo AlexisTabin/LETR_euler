@@ -175,7 +175,7 @@ def infer_on_image(model_name, raw_img, ax, demo):
     plot_line_on_img(lines_struct, ax, color='blue')
     
     demo_path = os.path.join('demo/', demo)
-    os.mkaedirs(demo_path, exist_ok=True)
+    os.makedirs(demo_path, exist_ok=True)
     fig.savefig(os.path.join(demo_path, model_name_without_pth + '.png'), dpi=300, bbox_inches='tight', pad_inches=0)
     plt.close(fig)
 
