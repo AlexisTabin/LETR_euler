@@ -10,4 +10,6 @@ git pull
 TAG=$(git rev-parse --short HEAD)
 source ~/.bashrc
 conda activate deepl
+cp exp/res101_stage2_516_from_a1_with_170_epochs/checkpoints/checkpoint.pth exp/res101_stage2/checkpoints/checkpoint.pth
+
 sbatch < run.sh
