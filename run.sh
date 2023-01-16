@@ -10,18 +10,18 @@
 #SBATCH --time=0-23:59:59
 
 
-#SBATCH --job-name=a5
-#SBATCH --output=a5.out
+#SBATCH --job-name=a0
+#SBATCH --output=a0.out
 
 
-#SBATCH --mail-type=ALL    # notify on state change: BEGIN, END, FAIL or ALL
-#SBATCH --mail-user=atabin@student.ethz.ch  # who to send email notification for job stats changes
+#SBATCH --mail-type=ALL                                 # notify on state change: BEGIN, END, FAIL or ALL
+#SBATCH --mail-user=your-ethz-username@ethz.ch  # who to send email notification for job stats changes
 
 
-echo "Running A5"
+echo "Running A0"
 
-rm -rf exp/a5/
-bash script/train/a5_train_stage2_focal_res101.sh  a5
+rm -rf exp/a0/
+bash script/train/a0_train_stage1.sh  a0
 
 echo "Done rendering"
 
