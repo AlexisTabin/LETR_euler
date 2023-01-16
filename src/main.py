@@ -19,10 +19,9 @@ from args import get_args_parser
 import wandb
 
 def main(args):
-    print("ARGS : ", args)
+    #print("ARGS : ", args)
     utils.init_distributed_mode(args)
     print("git:\n  {}\n".format(utils.get_sha()))
-
 
     output_dir = Path(args.output_dir)
 
@@ -174,7 +173,7 @@ def main(args):
     print("Start training at epoch: ", args.start_epoch)
     print("Total epochs: ", args.epochs)
 
-    if utils.is_main_process():
+    if utils.is_main_process() and  args.wandb_name != "no_wandb":
         print("ARGS : ", args)
         wandb_name =  args.wandb_name if args.wandb_name else "Wandb name not set"
         wandb.init(project="letr", entity="hogliners", name=wandb_name)
