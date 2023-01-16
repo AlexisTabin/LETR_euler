@@ -7,7 +7,7 @@
 #SBATCH --gpus-per-node=1
 #SBATCH --time=0-3:59:59
 
-#SBATCH --job-name=demo
+#SBATCH --job-name=demo_letr
 #SBATCH --output=demo.out
 
 
