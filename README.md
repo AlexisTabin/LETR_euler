@@ -1,52 +1,30 @@
-# LETR Adapted : Line Segment Detection Using Transformers without Edges used to detect lines and classify them into textural/structural lines in an end-to-end fashion
+## Code for DL HS22 Project: Exploration of Structural-Textural Line Segment Classification
+Team members: Yifan Yu, Shinjeong Kim, Alexis Tabin, Marco Voegeli
 
-## Introduction 
-This repository contains an adapted version of the official code and pretrained models for [Line Segment Detection Using Transformers without Edges](https://arxiv.org/abs/2101.01909).
+## Data Preparation and Processing
+The code used to download, process, and generate normal difference values are included in `data` folder. The `csv` files are directly from [Hypersim](https://github.com/apple/ml-hypersim) dataset. `download.py` is modified from [this download script](https://github.com/apple/ml-hypersim/blob/main/contrib/99991) to download only the subset of data we used, with only RGB images, camera-world surface normals, and camera pose details (only for 3D line reconstruction).
 
-## Results and Checkpoints
+`normal_diff_label.py` reads the downloaded data and produce data including the [LSD(Pytlsd)](https://github.com/iago-suarez/pytlsd) detections, ground truth filtering of the line segments (using 45deg threshold), and calculated surface normal differences per-pixel, which are then used to train our models.
 
+## Omnidata Baseline
+The Omnidata surface normal estimation baseline is easy to run using the demo in the [official repo](https://github.com/EPFL-VILAB/omnidata), the images need to be resized to 384x384, and the estimated surface normals are scaled back to original shape using nearest-neighbor interpolation. The surface normals are then processed using (commented) code in `data/normal_diff_label.py` to calculate the normal differences and classify the segments by comparing to threshold.
 
-| Name | sAP10 | sAP15 | sF10 | sF15 | URL|
-| --- | --- | --- | --- | --- |--- |
-| Wireframe | 65.6 | 68.0 | 66.1 | 67.4 | [LETR-R101](https://vcl.ucsd.edu/letr/checkpoints/res101/res101_stage2_focal.zip) |
-| YorkUrban | 29.6 | 32.0 | 40.5 | 42.1 | [LETR-R50](https://vcl.ucsd.edu/letr/checkpoints/res50/res50_stage2_focal.zip) |
+## Per-pixel Normal Difference Prediction
 
-## Reproducing Results
+Instructions are in the [README](./normal-difference-prediction/README.md) file in `normal-difference-prediction`.
 
-### Installation
+## Per-pixel Normal Difference Prediction (with weighted loss)
 
-#### Conda
+In `weighted-regression` we included a deviation from the prior model, where we apply a weight mask on the segments of the image where lines have been detected. Use `weighted-regression/regression.ipynb` to run, display the weight mask, and shows the performance of the model.
+It requires the data generated from the data folder.
 
-```bash
-conda env create -f environment.yml
-conda activate deepl
-```
+## End-to-End Detection and Classification with LETR
+This adapted version of LETR allows simultaneous detection and classification of lines into two classes (structural, textural). It is modified from the code and model taken from this paper:
+[Line Segment Detection Using Transformers without Edges](https://arxiv.org/abs/2101.01909) 
 
+Follow instructions in the [README](./letr-adapted/README.md) file in `letr-adapted`.
 
-### Step3: Data Preparation
+## 3D Line Reconstruction
+The 3D line reconstruction pipeline we used is one Yifan helped develop, but the pipeline is currently under review and is not open-sourced yet. So unfortunately we could not provide the code to reproduce the reconstruction results here.
 
-### Step4: Train Script Examples
-1. Train a coarse-model (a.k.a. stage1 model).
-    ```bash
-    # Usage: bash script/*/*.sh [exp name]
-    bash script/train/a0_train_stage1_res50.sh  res50_stage1 # LETR-R50  
-    bash script/train/a1_train_stage1_res101.sh res101_stage1 # LETR-R101 
-    ```
-
-2. Train a fine-model (a.k.a. stage2 model).
-    ```bash
-    # Usage: bash script/*/*.sh [exp name]
-    bash script/train/a2_train_stage2_res50.sh  res50_stage2  # LETR-R50
-    bash script/train/a3_train_stage2_res101.sh res101_stage2 # LETR-R101 
-    ```
-
-3. Fine-tune the fine-model with focal loss (a.k.a. stage2_focal model).
-    ```bash
-    # Usage: bash script/*/*.sh [exp name]
-    bash script/train/a4_train_stage2_focal_res50.sh   res50_stage2_focal # LETR-R50
-    bash script/train/a5_train_stage2_focal_res101.sh  res101_stage2_focal # LETR-R101 
-    ```
-
-### Acknowledgments
-
-This code is based on the implementations of [**LETR: Line Segment Detection Using Transformers without Edges**](https://github.com/mlpc-ucsd/LETR). 
+In `reconstruction`, we included the reconstructed 3D line we put in the report in `.obj` files. The 3 files correspond to the reconstruction result by filter-before, filter-after, and using all line segments (baseline), on scene `ai_001_010` and `cam_00` trajectory. The lines kept are visible from at least 4 views.

@@ -1,0 +1,13 @@
+data_letr/
+__pycache__/
+./*.out
+data/
+exp/
+evaluation/
+*.err
+*.out
+wandb/
+data_normals/
+*.csv
+data_letr/
+
